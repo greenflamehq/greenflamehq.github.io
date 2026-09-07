@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { normalizeVariant, nextVariant, variants, studyControlsEnabled } from './prototype.mjs';
+assert.equal(normalizeVariant('unexpected'), 'A');
+assert.equal(nextVariant('A', -1), 'E');
+assert.equal(nextVariant('E', 1), 'A');
+assert.equal(studyControlsEnabled('getgreenflame.com', '/study/', 'https:'), true);
+assert.equal(studyControlsEnabled('getgreenflame.com', '/study', 'https:'), true);
+assert.equal(studyControlsEnabled('getgreenflame.com', '/', 'https:'), false);
+assert.equal(studyControlsEnabled('getgreenflame.com', '/study-other/', 'https:'), false);
+const html = await readFile(new URL('index.html', import.meta.url), 'utf8');
+for (const variant of variants) assert.equal(html.split(`data-key="${variant}"`).length - 1, 1);
+assert.equal((html.match(/class="app-shot"/g) || []).length, 5);
+assert.equal((html.match(/class="app-icon"/g) || []).length, 5);
+for (const file of ['usage.png','greenflame.png','jost-regular.ttf','jost-bold.ttf']) assert.ok((await readFile(new URL(file, import.meta.url))).length > 0);
+console.log('Five variants, original product assets, and wraparound navigation checked.');
