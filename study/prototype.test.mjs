@@ -12,5 +12,8 @@ const html = await readFile(new URL('index.html', import.meta.url), 'utf8');
 for (const variant of variants) assert.equal(html.split(`data-key="${variant}"`).length - 1, 1);
 assert.equal((html.match(/class="app-shot"/g) || []).length, 5);
 assert.equal((html.match(/class="app-icon"/g) || []).length, 5);
+const contactSheet = html.split('data-key="C"')[1].split('</section>')[0];
+assert.ok(contactSheet.includes('<h1>Keep the point.</h1>'), 'Contact Sheet headline must remain present');
+assert.ok(contactSheet.indexOf('<h1>Keep the point.</h1>') < contactSheet.indexOf('class="c-layout"'), 'Contact Sheet must lead with its headline, before the screenshot');
 for (const file of ['usage.png','greenflame.png','jost-regular.ttf','jost-bold.ttf']) assert.ok((await readFile(new URL(file, import.meta.url))).length > 0);
 console.log('Five variants, original product assets, and wraparound navigation checked.');
