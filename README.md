@@ -3,8 +3,10 @@
 The static website for [greenflame](https://github.com/greenflamehq/greenflame),
 published with GitHub Pages at <https://getgreenflame.com>.
 
-Edit `index.html` and push to `main` to publish an update. No build step or
-dependencies are required. `greenflame.png` is the existing application logo.
+Edit `index.html` and `style.css`, then push to `main` to publish an update.
+No build step is required. `greenflame.png` is the existing application logo.
+The green accent (`#78D600`) is sampled from that logo. The Jost regular and
+bold fonts are self-hosted; their license is in `OFL-Jost.txt`.
 
 GitHub Pages serves the root of `main`. The custom domain is configured in the
 repository's Pages settings. Rebel manages the domain and its DNS.
