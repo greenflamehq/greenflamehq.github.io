@@ -24,6 +24,15 @@ Keep `CNAME` set to `getgreenflame.com`. The Rebel DNS configuration is:
 The GitHub domain-verification TXT record must also remain in place. GitHub
 manages the HTTPS certificate; no separate certificate purchase is needed.
 
-Before publishing changes, preview the page at desktop and phone widths and
-check the download, guide, and source links. The website has no JavaScript or
-build dependencies.
+The Bauhaus homepage is unchanged at `/`. The interactive **Afterimage**
+experiment lives at `/afterimage/`, using native canvas and JavaScript modules
+with no dependencies or build step. It captures only its own artwork, never
+the visitor's screen. Fragments stay in the current page; only “keep it” saves
+a PNG. Motion pauses when offscreen and starts paused for reduced-motion users.
+
+Before publishing, run `node afterimage/afterimage.test.mjs`, preview both
+pages at desktop and phone widths, and check the download, guide, and source
+links. On Afterimage, check drag and button capture, keyboard capture (Enter
+on the canvas), fragment dragging, arrow-key movement, turning, annotation,
+PNG download, deletion, reset, pause/resume, and the six-fragment limit.
+Test reduced motion and a touch device when available.
