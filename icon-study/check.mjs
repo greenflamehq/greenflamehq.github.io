@@ -16,4 +16,11 @@ assert.ok(html.includes('<details id="round-1">'), 'Round one remains available'
 assert.equal((html.match(/<summary>/g) || []).length, 4);
 assert.equal((html.match(/<\/details>/g) || []).length, 4);
 assert.ok(!html.includes('ROUND_TWO'));
-console.log('Three rounds plus the refinement, ten assets, original comparison, and all seven sizes checked.');
+const opaque = await readFile(new URL('greenflame-7a.svg', import.meta.url), 'utf8');
+const transparent = await readFile(new URL('greenflame-7a-transparent.svg', import.meta.url), 'utf8');
+assert.equal(transparent.replace(/\r/g, ''), opaque.replace(/\r/g, '').replace(/^.*<rect id="background"[^\n]*\n/m, ''), 'Transparent SVG must differ only by removal of its background');
+assert.ok(!transparent.includes('<rect'));
+for (const name of ['greenflame-7a.svg', 'greenflame-7a-transparent.svg']) {
+    assert.ok(html.includes(`href="${name}" download`), 'Both SVGs need download links');
+}
+console.log('All rounds, seven preview sizes, both SVG downloads, and transparent variant checked.');
