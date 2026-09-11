@@ -2,6 +2,7 @@
 export type Point = { x: number; y: number };
 export type Curve = [Point, Point, Point];
 export type Flame = { start: Point; curves: Curve[] };
+export type BendLocks = { collinear: boolean; equalLength: boolean };
 export const scale = 0.9 * 0.2041467305;
 export const offset = 12.8;
 export const handles = [
@@ -45,12 +46,54 @@ export function clampPoint(p: Point): Point {
         y: Math.max((31 - offset) / scale, Math.min((225 - offset) / scale, p.y)) };
 }
 
-export function movePoint(flame: Flame, id: HandleId, next: Point): Flame {
+export function linkBend(flame: Flame, driver: 'left-2' | 'left-3', locks: BendLocks): Flame {
+    if (!locks.collinear && !locks.equalLength) return flame;
+    const result = structuredClone(flame);
+    const anchor = pointFor(result, 'bend');
+    const other = driver === 'left-2' ? 'left-3' : 'left-2';
+    const a = pointFor(result, driver), b = pointFor(result, other);
+    const ax = a.x - anchor.x, ay = a.y - anchor.y;
+    const bx = b.x - anchor.x, by = b.y - anchor.y;
+    const lengthA = Math.hypot(ax, ay), lengthB = Math.hypot(bx, by);
+    // A collapsed handle has no direction: retain the partner's direction,
+    // or use the opposite driver direction when the partner is collapsed.
+    const direction = locks.collinear && lengthA > 0
+        ? { x: -ax / lengthA, y: -ay / lengthA }
+        : lengthB > 0 ? { x: bx / lengthB, y: by / lengthB }
+        : lengthA > 0 ? { x: -ax / lengthA, y: -ay / lengthA } : { x: 1, y: 0 };
+    let available = Infinity;
+    for (const [axis, min, max] of [['x', (32 - offset) / scale, (224 - offset) / scale], ['y', (31 - offset) / scale, (225 - offset) / scale]] as const) {
+        const v = direction[axis];
+        if (v > 0) available = Math.min(available, (max - anchor[axis]) / v);
+        if (v < 0) available = Math.min(available, (min - anchor[axis]) / v);
+    }
+    const length = Math.max(0, Math.min(locks.equalLength ? lengthA : lengthB, available));
+    const h = handles.find(h => h.id === other)!;
+    result.curves[h.segment][h.point] = clampPoint({ x: anchor.x + direction.x * length, y: anchor.y + direction.y * length });
+    if (locks.equalLength && lengthA > 0) {
+        const active = handles.find(h => h.id === driver)!;
+        result.curves[active.segment][active.point] = clampPoint({ x: anchor.x + ax / lengthA * length, y: anchor.y + ay / lengthA * length });
+    }
+    return result;
+}
+
+export function movePoint(flame: Flame, id: HandleId, next: Point, locks: BendLocks = { collinear: false, equalLength: false }): Flame {
     const result = structuredClone(flame);
     const h = handles.find(h => h.id === id);
     if (!h) throw new Error('Unknown handle');
     const old = pointFor(flame, id);
-    const p = clampPoint(next);
+    let p = clampPoint(next);
+    if (id === 'bend' && (locks.collinear || locks.equalLength)) {
+        // Move the linked trio together; stop at the boundary rather than
+        // clamping each handle separately and breaking the relationship.
+        let dx = p.x - old.x, dy = p.y - old.y;
+        for (const point of [old, pointFor(flame, 'left-2'), pointFor(flame, 'left-3')]) {
+            const limited = clampPoint({ x: point.x + dx, y: point.y + dy });
+            dx = dx >= 0 ? Math.min(dx, limited.x - point.x) : Math.max(dx, limited.x - point.x);
+            dy = dy >= 0 ? Math.min(dy, limited.y - point.y) : Math.max(dy, limited.y - point.y);
+        }
+        p = { x: old.x + dx, y: old.y + dy };
+    }
     result.curves[h.segment][h.point] = p;
     if (h.point === 2) {
         for (const [segment, control] of [[h.segment, 1], [h.segment + 1, 0]]) {
@@ -58,7 +101,7 @@ export function movePoint(flame: Flame, id: HandleId, next: Point): Flame {
             result.curves[segment][control] = clampPoint({ x: adjacent.x + p.x - old.x, y: adjacent.y + p.y - old.y });
         }
     }
-    return result;
+    return id === 'left-2' || id === 'left-3' ? linkBend(result, id, locks) : result;
 }
 
 export function pathData(flame: Flame): string {
@@ -98,6 +141,9 @@ async function startWorkshop(): Promise<void> {
         const select = get<HTMLSelectElement>('point');
         const xInput = get<HTMLInputElement>('x');
         const yInput = get<HTMLInputElement>('y');
+        const collinear = get<HTMLInputElement>('collinear');
+        const equalLength = get<HTMLInputElement>('equal-length');
+        const bendLocks = (): BendLocks => ({ collinear: collinear.checked, equalLength: equalLength.checked });
         const ns = 'http://www.w3.org/2000/svg';
         const make = (tag: string, attrs: Record<string, string> = {}) => {
             const element = document.createElementNS(ns, tag);
@@ -147,7 +193,7 @@ async function startWorkshop(): Promise<void> {
                 const p = pointFor(flame, h.id);
                 const step = (e.shiftKey ? 0.1 : 1) / scale;
                 selected = h.id;
-                flame = movePoint(flame, selected, { x: p.x + d.x * step, y: p.y + d.y * step });
+                flame = movePoint(flame, selected, { x: p.x + d.x * step, y: p.y + d.y * step }, bendLocks());
                 render();
             });
             node.addEventListener('pointerdown', (event: Event) => {
@@ -196,7 +242,7 @@ async function startWorkshop(): Promise<void> {
         editor.addEventListener('pointermove', e => {
             if (!drag || e.pointerId !== drag.id) return;
             const p = localPoint(e);
-            flame = movePoint(flame, selected, { x: p.x - drag.dx, y: p.y - drag.dy });
+            flame = movePoint(flame, selected, { x: p.x - drag.dx, y: p.y - drag.dy }, bendLocks());
             render();
         });
         const finishDrag = (e: PointerEvent) => {
@@ -208,10 +254,15 @@ async function startWorkshop(): Promise<void> {
         editor.addEventListener('pointercancel', finishDrag);
         editor.addEventListener('lostpointercapture', () => { drag = null; });
         zoom.addEventListener('change', render);
+        for (const toggle of [collinear, equalLength]) toggle.addEventListener('change', () => {
+            const driver = selected === 'left-3' ? 'left-3' : 'left-2';
+            flame = linkBend(flame, driver, bendLocks());
+            render();
+        });
         select.addEventListener('change', () => { selected = select.value as HandleId; render(); });
         for (const input of [xInput, yInput]) input.addEventListener('change', () => {
             const x = xInput.valueAsNumber; const y = yInput.valueAsNumber;
-            if (Number.isFinite(x) && Number.isFinite(y)) flame = movePoint(flame, selected, { x: (x - offset) / scale, y: (y - offset) / scale });
+            if (Number.isFinite(x) && Number.isFinite(y)) flame = movePoint(flame, selected, { x: (x - offset) / scale, y: (y - offset) / scale }, bendLocks());
             render();
         });
         for (const format of ['ivory', 'transparent']) get<HTMLButtonElement>(format).addEventListener('click', () => {
@@ -224,11 +275,12 @@ async function startWorkshop(): Promise<void> {
             status.textContent = `${format === 'ivory' ? 'Ivory' : 'Transparent'} SVG prepared for download.`;
         });
         get<HTMLButtonElement>('reset').addEventListener('click', () => {
+            collinear.checked = false; equalLength.checked = false;
             flame = structuredClone(original); selected = 'notch'; render();
             status.textContent = 'Reset to the original #7B.';
         });
         render();
-        for (const id of ['zoom', 'coordinates', 'ivory', 'transparent', 'reset']) get<HTMLInputElement>(id).disabled = false;
+        for (const id of ['zoom', 'coordinates', 'bend-options', 'ivory', 'transparent', 'reset']) get<HTMLInputElement>(id).disabled = false;
         status.textContent = 'Ready. Your edits stay in this tab.';
     } catch (error) {
         status.textContent = error instanceof Error ? error.message : 'The editor could not start. Please reload.';

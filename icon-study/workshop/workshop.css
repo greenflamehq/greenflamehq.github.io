@@ -30,6 +30,7 @@ section { min-width: 0; }
 fieldset { margin: 18px 0 0; border: 1px solid #b8b9ad; display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; }
 legend { font-size: 14px; padding: 0 6px; }
 fieldset label { display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+.bend-options label { flex-direction: row; align-items: center; gap: 8px; }
 input, select, button { font: inherit; }
 input[type="number"] { width: 88px; }
 input[type="checkbox"] { accent-color: #30312e; }
