@@ -66,9 +66,22 @@
         <main>
             <div class="intro"><p class="eyebrow">ICON STUDY / THREE ROUNDS</p><h1>Finding the flame.</h1><p>Compare each at 256, 128, 64, 48, 32, 24, and 16 pixels. Open any round below—or keep several open to compare. Click a large preview to open the original.</p></div>
             <details id="revision-7" open>
-                <summary>#7 refined — closer to the edges, fully contained</summary>
-                <p class="round-note">The bracket margin is approximately 5 pixels at 256 × 256 and scales with the smaller previews. The entire flame sits inside the rectangle defined by the brackets.</p>
+                <summary>#7 refined — framing and pixel clearance</summary>
+                <p class="round-note">#7B uses exact 16px outer margins; #7A keeps its original 5px margins. Both contain the whole flame. The 16px #7B preview uses its dedicated PNG export to preserve a completely clear one-pixel border.</p>
                 <div class="concepts">
+                    <figure id="7b">
+                        <a class="image-link" href="greenflame-7b.svg" target="_blank" rel="noopener" aria-label="Open icon 7B as SVG"><img class="concept-image" src="greenflame-7b-256.png" alt="Icon 7B: filled flame contained by brackets with exactly sixteen pixels of outer clearance" width="256" height="256"></a>
+                        <span class="size-label">256 × 256</span>
+                        <figcaption><span class="number">07B</span><h2>One clear pixel</h2><p>Exact 16px outer margins at 256 × 256. The 16px PNG below has one fully transparent pixel around every edge.</p><p>SVG: <a href="greenflame-7b.svg" download>Ivory</a> · <a href="greenflame-7b-transparent.svg" download>Transparent</a><br>Transparent PNG: <a href="greenflame-7b-256.png" download>256px</a> · <a href="greenflame-7b-16.png" download>16px</a></p></figcaption>
+                        <div class="size-strip" aria-label="Icon 7B at smaller sizes">
+                            <span class="size-sample"><img src="greenflame-7b-transparent.svg" width="128" height="128" alt="Icon 7B at 128 pixels"><span>128</span></span>
+                            <span class="size-sample"><img src="greenflame-7b-transparent.svg" width="64" height="64" alt="Icon 7B at 64 pixels"><span>64</span></span>
+                            <span class="size-sample"><img src="greenflame-7b-transparent.svg" width="48" height="48" alt="Icon 7B at 48 pixels"><span>48</span></span>
+                            <span class="size-sample"><img src="greenflame-7b-transparent.svg" width="32" height="32" alt="Icon 7B at 32 pixels"><span>32</span></span>
+                            <span class="size-sample"><img src="greenflame-7b-transparent.svg" width="24" height="24" alt="Icon 7B at 24 pixels"><span>24</span></span>
+                            <span class="size-sample"><img src="greenflame-7b-16.png" width="16" height="16" alt="Icon 7B at 16 pixels"><span>16</span></span>
+                        </div>
+                    </figure>
                     <figure>
                         <a class="image-link" href="10-contained-flame.png" target="_blank" rel="noopener" aria-label="Open Fully framed at full size"><img class="concept-image" src="10-contained-flame.png" alt="The revised layout: edge-hugging brackets, with the flame completely inside their inner rectangle." width="1254" height="1254"></a>
                         <span class="size-label">256 × 256</span>
@@ -233,7 +246,7 @@
             </div>
             </details>
         </main>
-        <footer><p>Browser-scaled previews in CSS pixels; view at 100% zoom to compare sizes.<br>The raster previews retain their ivory background. #7A also has flat-color SVG downloads; Windows icon exports are a separate step.</p><p>The current product icon remains unchanged.</p></footer>
+        <footer><p>Preview sizes are CSS pixels; view at 100% zoom to compare sizes.<br>#7A and #7B have flat-color SVG downloads. #7B also has transparent 256px and 16px PNGs; Windows icon exports are a separate step.</p><p>The current product icon remains unchanged.</p></footer>
     </div>
 </body>
 </html>

@@ -23,4 +23,13 @@ assert.ok(!transparent.includes('<rect'));
 for (const name of ['greenflame-7a.svg', 'greenflame-7a-transparent.svg']) {
     assert.ok(html.includes(`href="${name}" download`), 'Both SVGs need download links');
 }
-console.log('All rounds, seven preview sizes, both SVG downloads, and transparent variant checked.');
+const opaque7b = await readFile(new URL('greenflame-7b.svg', import.meta.url), 'utf8');
+const transparent7b = await readFile(new URL('greenflame-7b-transparent.svg', import.meta.url), 'utf8');
+assert.equal(transparent7b.replace(/\r/g, ''), opaque7b.replace(/\r/g, '').replace(/^.*<rect id="background"[^\n]*\n/m, ''));
+for (const name of ['greenflame-7b.svg', 'greenflame-7b-transparent.svg', 'greenflame-7b-256.png', 'greenflame-7b-16.png']) {
+    assert.ok(html.includes(`href="${name}" download`));
+    assert.ok((await readFile(new URL(name, import.meta.url))).length);
+}
+for (const size of [128, 64, 48, 32, 24]) assert.ok(html.includes(`src="greenflame-7b-transparent.svg" width="${size}" height="${size}"`));
+assert.ok(html.includes('src="greenflame-7b-16.png" width="16" height="16"'));
+console.log('All rounds, SVG variants, 7B downloads, and preview sizes checked. Run node icon-study/export-7b.mjs to regenerate and verify exact PNG clearance.');
