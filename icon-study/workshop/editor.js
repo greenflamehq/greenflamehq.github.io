@@ -7,7 +7,8 @@
 export const scale = 0.9 * 0.2041467305;
 export const offset = 12.8;
 export const handles = [
-    { id: 'left-1', label: 'Left curve · upper handle', segment: 1, point: 0, kind: 'control' },
+    { id: 'left-0', label: 'Left curve · upper incoming', segment: 0, point: 1, kind: 'control' },
+    { id: 'left-1', label: 'Left curve · upper outgoing', segment: 1, point: 0, kind: 'control' },
     { id: 'left-2', label: 'Left curve · bend incoming', segment: 1, point: 1, kind: 'control' },
     { id: 'left-3', label: 'Left curve · bend outgoing', segment: 2, point: 0, kind: 'control' },
     { id: 'left-4', label: 'Left curve · notch incoming', segment: 2, point: 1, kind: 'control' },
@@ -47,11 +48,12 @@ export function clampPoint(p       )        {
         y: Math.max((31 - offset) / scale, Math.min((225 - offset) / scale, p.y)) };
 }
 
-export function linkBend(flame       , driver                     , locks           )        {
+export function linkHandles(flame       , driver                                           , locks           )        {
     if (!locks.collinear && !locks.equalLength) return flame;
     const result = structuredClone(flame);
-    const anchor = pointFor(result, 'bend');
-    const other = driver === 'left-2' ? 'left-3' : 'left-2';
+    const upper = driver === 'left-0' || driver === 'left-1';
+    const anchor = upper ? result.curves[0][2] : pointFor(result, 'bend');
+    const other = upper ? (driver === 'left-0' ? 'left-1' : 'left-0') : (driver === 'left-2' ? 'left-3' : 'left-2');
     const a = pointFor(result, driver), b = pointFor(result, other);
     const ax = a.x - anchor.x, ay = a.y - anchor.y;
     const bx = b.x - anchor.x, by = b.y - anchor.y;
@@ -78,7 +80,7 @@ export function linkBend(flame       , driver                     , locks       
     return result;
 }
 
-export function movePoint(flame       , id          , next       , locks            = { collinear: false, equalLength: false })        {
+export function movePoint(flame       , id          , next       , locks            = { collinear: false, equalLength: false }, upperLocks            = { collinear: false, equalLength: false })        {
     const result = structuredClone(flame);
     const h = handles.find(h => h.id === id);
     if (!h) throw new Error('Unknown handle');
@@ -102,7 +104,8 @@ export function movePoint(flame       , id          , next       , locks        
             result.curves[segment][control] = clampPoint({ x: adjacent.x + p.x - old.x, y: adjacent.y + p.y - old.y });
         }
     }
-    return id === 'left-2' || id === 'left-3' ? linkBend(result, id, locks) : result;
+    if (id === 'left-0' || id === 'left-1') return linkHandles(result, id, upperLocks);
+    return id === 'left-2' || id === 'left-3' ? linkHandles(result, id, locks) : result;
 }
 
 export function pathData(flame       )         {
@@ -145,6 +148,9 @@ async function startWorkshop()                {
         const collinear = get                  ('collinear');
         const equalLength = get                  ('equal-length');
         const bendLocks = ()            => ({ collinear: collinear.checked, equalLength: equalLength.checked });
+        const upperCollinear = get                  ('upper-collinear');
+        const upperEqualLength = get                  ('upper-equal-length');
+        const upperLocks = ()            => ({ collinear: upperCollinear.checked, equalLength: upperEqualLength.checked });
         const ns = 'http://www.w3.org/2000/svg';
         const make = (tag        , attrs                         = {}) => {
             const element = document.createElementNS(ns, tag);
@@ -177,6 +183,9 @@ async function startWorkshop()                {
             guides.append(line);
             return line;
         });
+        const upperLine = make('path', { class: 'guide' });
+        const fixedAnchor = make('rect', { fill: '#30312e', stroke: 'white', 'stroke-width': '1.5', 'vector-effect': 'non-scaling-stroke', 'pointer-events': 'none', role: 'img', 'aria-label': 'Upper join: fixed anchor' });
+        guides.append(upperLine, fixedAnchor);
         const nodes = handles.map(h => {
             const node = make('g', { class: 'handle', 'data-kind': h.kind, tabindex: '0', role: 'button', 'aria-label': `${h.label}. Drag or use arrow keys.` });
             node.append(make('circle', { class: 'hit' }), make('circle', { class: 'dot' }));
@@ -194,7 +203,7 @@ async function startWorkshop()                {
                 const p = pointFor(flame, h.id);
                 const step = (e.shiftKey ? 0.1 : 1) / scale;
                 selected = h.id;
-                flame = movePoint(flame, selected, { x: p.x + d.x * step, y: p.y + d.y * step }, bendLocks());
+                flame = movePoint(flame, selected, { x: p.x + d.x * step, y: p.y + d.y * step }, bendLocks(), upperLocks());
                 render();
             });
             node.addEventListener('pointerdown', (event       ) => {
@@ -215,7 +224,14 @@ async function startWorkshop()                {
             const d = pathData(flame);
             editorFlame.setAttribute('d', d);
             for (const path of previewPaths) path.setAttribute('d', d);
-            editor.setAttribute('viewBox', zoom.checked ? '130 80 55 80' : '0 0 256 256');
+            editor.setAttribute('viewBox', zoom.checked ? '125 55 65 110' : '0 0 256 256');
+            const anchor = flame.curves[0][2], incoming = pointFor(flame, 'left-0');
+            upperLine.setAttribute('d', `M${incoming.x} ${incoming.y}L${anchor.x} ${anchor.y}`);
+            const radius = zoom.checked ? 4.5 : 13;
+            fixedAnchor.setAttribute('x', String(anchor.x - radius));
+            fixedAnchor.setAttribute('y', String(anchor.y - radius));
+            fixedAnchor.setAttribute('width', String(radius * 2));
+            fixedAnchor.setAttribute('height', String(radius * 2));
             lines.forEach((line, i) => {
                 const segment = i + 1;
                 const start = flame.curves[segment - 1][2];
@@ -243,7 +259,7 @@ async function startWorkshop()                {
         editor.addEventListener('pointermove', e => {
             if (!drag || e.pointerId !== drag.id) return;
             const p = localPoint(e);
-            flame = movePoint(flame, selected, { x: p.x - drag.dx, y: p.y - drag.dy }, bendLocks());
+            flame = movePoint(flame, selected, { x: p.x - drag.dx, y: p.y - drag.dy }, bendLocks(), upperLocks());
             render();
         });
         const finishDrag = (e              ) => {
@@ -257,13 +273,18 @@ async function startWorkshop()                {
         zoom.addEventListener('change', render);
         for (const toggle of [collinear, equalLength]) toggle.addEventListener('change', () => {
             const driver = selected === 'left-3' ? 'left-3' : 'left-2';
-            flame = linkBend(flame, driver, bendLocks());
+            flame = linkHandles(flame, driver, bendLocks());
+            render();
+        });
+        for (const toggle of [upperCollinear, upperEqualLength]) toggle.addEventListener('change', () => {
+            const driver = selected === 'left-1' ? 'left-1' : 'left-0';
+            flame = linkHandles(flame, driver, upperLocks());
             render();
         });
         select.addEventListener('change', () => { selected = select.value            ; render(); });
         for (const input of [xInput, yInput]) input.addEventListener('change', () => {
             const x = xInput.valueAsNumber; const y = yInput.valueAsNumber;
-            if (Number.isFinite(x) && Number.isFinite(y)) flame = movePoint(flame, selected, { x: (x - offset) / scale, y: (y - offset) / scale }, bendLocks());
+            if (Number.isFinite(x) && Number.isFinite(y)) flame = movePoint(flame, selected, { x: (x - offset) / scale, y: (y - offset) / scale }, bendLocks(), upperLocks());
             render();
         });
         for (const format of ['ivory', 'transparent']) get                   (format).addEventListener('click', () => {
@@ -277,11 +298,12 @@ async function startWorkshop()                {
         });
         get                   ('reset').addEventListener('click', () => {
             collinear.checked = false; equalLength.checked = false;
+            upperCollinear.checked = false; upperEqualLength.checked = false;
             flame = structuredClone(original); selected = 'notch'; render();
             status.textContent = 'Reset to the original #7B.';
         });
         render();
-        for (const id of ['zoom', 'coordinates', 'bend-options', 'ivory', 'transparent', 'reset']) get                  (id).disabled = false;
+        for (const id of ['zoom', 'coordinates', 'bend-options', 'upper-options', 'ivory', 'transparent', 'reset']) get                  (id).disabled = false;
         status.textContent = 'Ready. Your edits stay in this tab.';
     } catch (error) {
         status.textContent = error instanceof Error ? error.message : 'The editor could not start. Please reload.';
