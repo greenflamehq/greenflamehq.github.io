@@ -1,0 +1,44 @@
+.guide-intro { padding: 48px 40px; border-bottom: 1px solid var(--ink); }
+.guide-intro h1 { font-size: clamp(52px, 6vw, 84px); }
+.guide-intro > p:not(.eyebrow) { font-size: 22px; line-height: 1.5; }
+.guide-layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); }
+.guide-sidebar { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 24px; font-size: 14px; }
+.guide-sidebar a { display: block; padding: 5px 0; text-decoration: none; }
+.guide-sidebar a:hover { text-decoration: underline; }
+.guide-sidebar .sub { padding-left: 12px; font-size: 12px; }
+.sidebar-group-label { font-weight: 700; margin: 24px 0 8px; border-top: 1px solid var(--rule); padding-top: 12px; }
+.sidebar-group-label:first-child { margin-top: 0; border: 0; }
+.guide-content { min-width: 0; border-left: 1px solid var(--ink); padding: 0 48px 64px; font-size: 17px; line-height: 1.65; }
+.guide-content h2 { border-top: 1px solid var(--ink); margin: 64px 0 24px; padding-top: 22px; font-size: 38px; letter-spacing: -.035em; line-height: 1.15; }
+.guide-content h2:first-child { border-top: 0; margin-top: 36px; }
+.guide-content h3 { margin: 36px 0 14px; font-size: 26px; line-height: 1.25; letter-spacing: -.02em; }
+.guide-content h4 { font-size: 19px; margin: 26px 0 10px; }
+.guide-content p, .guide-content li { max-width: 76ch; }
+.guide-content li { margin-block: 8px; }
+.guide-content a { overflow-wrap: anywhere; }
+.guide-content code { font-size: .82em; overflow-wrap: anywhere; }
+.guide-content pre { padding: 20px; overflow-x: auto; background: var(--ink); color: var(--paper); font-size: 15px; line-height: 1.7; }
+.guide-content pre code { font-size: inherit; overflow-wrap: normal; }
+.table-wrap { overflow-x: auto; margin: 20px 0; }
+.guide-content table { border-collapse: collapse; width: 100%; font-size: 15px; text-align: left; }
+.guide-content th { background: var(--green); color: var(--ink); font-weight: 700; }
+.guide-content th, .guide-content td { padding: 12px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.guide-content td:first-child { min-width: 120px; }
+.callout { border-left: 4px solid var(--green); padding: 16px 20px; margin: 24px 0; background: #e2e0d3; }
+.callout-warn { border-left-color: var(--ink); }
+@media (max-width: 1000px) {
+    .guide-layout { grid-template-columns: 190px minmax(0, 1fr); }
+    .guide-content { padding-inline: 26px; }
+    .guide-sidebar { padding: 20px 16px; }
+}
+@media (max-width: 650px) {
+    .guide-intro { padding: 32px 22px; }
+    .guide-layout { display: block; }
+    .guide-sidebar { position: static; max-height: 260px; border-bottom: 1px solid var(--ink); padding: 22px; }
+    .guide-content { border-left: 0; padding: 0 22px 40px; font-size: 16px; }
+    .guide-content h2 { font-size: 32px; }
+    .guide-content h3 { font-size: 24px; }
+    .guide-content th, .guide-content td { padding: 10px; }
+    .guide-content table { min-width: 520px; }
+    .guide-content ul, .guide-content ol { padding-left: 24px; }
+}

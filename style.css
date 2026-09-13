@@ -37,6 +37,7 @@ a:focus-visible { outline: 3px solid currentColor; outline-offset: 6px; }
 nav { display: flex; gap: 30px; }
 nav a { display: inline-block; padding-block: 4px; text-decoration: none; }
 nav a:hover { text-decoration: underline; }
+nav [aria-current="page"] { padding-block: 4px; font-weight: 700; }
 .nameplate { display: flex; align-items: flex-end; justify-content: space-between; padding: 22px 34px 31px; border-bottom: 1px solid var(--ink); gap: 20px; }
 .wordmark { display: inline-flex; align-items: center; gap: .12em; font-size: clamp(64px, 11.5vw, 166px); font-weight: 700; letter-spacing: -.085em; line-height: .93; text-decoration: none; white-space: nowrap; }
 .brand-dot { color: var(--green); }

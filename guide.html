@@ -1,0 +1,984 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Capture, annotate, save, and automate with greenflame. A practical guide and complete shortcut, command-line, and settings reference.">
+    <meta name="theme-color" content="#eeecdf">
+    <title>the guide — greenflame</title>
+    <link rel="icon" href="/favicon.ico?v=e" type="image/x-icon" sizes="16x16 32x32 48x48">
+    <link rel="canonical" href="https://getgreenflame.com/guide.html">
+    <link rel="preload" href="jost-bold.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="guide.css">
+</head>
+<body class="guide-page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="sheet">
+        <header>
+            <div class="masthead">
+                <a class="identity" href="/" aria-label="greenflame home">an instrument for clear communication</a>
+                <nav aria-label="Main navigation"><span><a href="/">home</a> <span aria-hidden="true">↗</span></span><span aria-current="page">the guide</span><span><a href="https://github.com/greenflamehq/greenflame">the source</a> <span aria-hidden="true">↗</span></span></nav>
+            </div>
+            <div class="nameplate"><a class="wordmark" href="/" aria-label="greenflame home"><svg class="wordmark-flame" viewBox="319 122 578 930" aria-hidden="true"><path d="M648 122C747 212 796 311 794 426C794 516 767 568 746 621C724 676 737 691 758 721C800 685 826 638 826 585C876 646 897 706 897 770C897 932 767 1052 609 1052C449 1052 319 931 319 775C319 640 410 552 504 461C614 357 684 239 648 122Z"/></svg><span>greenflame<span class="brand-dot">.</span></span></a><span class="edition">screen capture<br>for windows / 01</span></div>
+        </header>
+        <div class="guide-intro"><p class="eyebrow">the field guide / windows</p><h1>make your<br><span class="highlight">point.</span></h1><p>From your first screenshot to your next script.<br>Capture, annotate, and put it to work.</p></div>
+        <div class="guide-layout">
+            <aside class="guide-sidebar" aria-label="Guide contents">
+
+      <p class="sidebar-group-label">getting started</p>
+      <a href="#getting-started">overview</a>
+      <a href="#first-capture" class="sub">first capture</a>
+
+      <p class="sidebar-group-label">capture &amp; selection</p>
+      <a href="#capture">how capture works</a>
+      <a href="#selection-modes" class="sub">selection modes</a>
+      <a href="#adjusting-selection" class="sub">adjusting the selection</a>
+      <a href="#annotation-manipulation" class="sub">moving annotations</a>
+
+      <p class="sidebar-group-label">annotation tools</p>
+      <a href="#annotation-tools">tool overview</a>
+      <a href="#tool-options" class="sub">color, size &amp; cursors</a>
+      <a href="#text-tool" class="sub">text</a>
+      <a href="#bubble-tool" class="sub">bubble</a>
+      <a href="#highlighter-tool" class="sub">highlighter</a>
+      <a href="#obfuscate-tool" class="sub">obfuscate</a>
+
+      <p class="sidebar-group-label">output</p>
+      <a href="#saving">saving &amp; sharing</a>
+      <a href="#pinned-images" class="sub">pinned images</a>
+
+      <p class="sidebar-group-label">command line</p>
+      <a href="#command-line">CLI overview</a>
+      <a href="#cli-capture-modes" class="sub">capture modes</a>
+      <a href="#cli-output-options" class="sub">output options</a>
+      <a href="#cli-padding" class="sub">padding</a>
+      <a href="#cli-window-matching" class="sub">window matching</a>
+      <a href="#cli-capture-backends" class="sub">capture backends</a>
+      <a href="#cli-output-format" class="sub">output format</a>
+      <a href="#cli-annotations">CLI annotations</a>
+      <a href="#cli-ann-schema" class="sub">schema &amp; coordinates</a>
+      <a href="#cli-ann-types" class="sub">annotation types</a>
+      <a href="#cli-ann-text" class="sub">text &amp; fonts</a>
+      <a href="#cli-ann-colors" class="sub">colors &amp; size</a>
+      <a href="#cli-ann-validation" class="sub">validation &amp; rendering</a>
+      <a href="#exit-codes">exit codes</a>
+
+      <p class="sidebar-group-label">reference</p>
+      <a href="#keyboard-reference">keyboard reference</a>
+
+      <p class="sidebar-group-label">settings</p>
+      <a href="#configuration">configuration</a>
+      <a href="#config-capture" class="sub">capture</a>
+      <a href="#config-ui" class="sub">UI</a>
+      <a href="#config-tools" class="sub">tools</a>
+      <a href="#config-save" class="sub">save</a>
+      <a href="#filename-patterns" class="sub">filename patterns</a>
+
+    </aside>
+            <main class="guide-content" id="main">
+
+      <h2 id="getting-started">getting started</h2>
+
+      <p>Choose the <a href="/#downloads">installer or portable download</a> for Windows 11. Run <code>greenflame.exe</code>; it stays in the system tray, ready when you need it. You can take your first screenshot without editing any settings.</p>
+
+      <h3 id="first-capture">your first capture</h3>
+
+      <div class="docs-beside">
+        <div class="docs-beside-text">
+          <ol>
+            <li><strong>Launch</strong> <code>greenflame.exe</code>. A green flame icon appears in the system tray.</li>
+            <li><strong>Press Print Screen</strong> (or left-click the tray icon). The screen freezes and a selection overlay appears.</li>
+            <li><strong>Click and drag</strong> to draw a rectangle around whatever you want to capture.</li>
+            <li>Use the toolbar to annotate, or press <strong>Ctrl+C</strong> to copy straight to the clipboard.</li>
+          </ol>
+
+          <p>That's the basic flow. The rest of this page covers everything else: selection modes, annotation tools, pinned images, the full CLI, and configuration.</p>
+        </div>
+
+      </div>
+
+      <h2 id="capture">capture &amp; selection</h2>
+
+      <p>greenflame uses a <strong>capture-first</strong> model. When you trigger an interactive capture, greenflame freezes the desktop into a snapshot. You then select a region from that frozen image, not from a live view that shifts as you draw.</p>
+
+      <p>Your desktop selection stays still while you work. Window selection can capture the chosen window separately, including portions outside the visible desktop.</p>
+
+      <h3 id="selection-modes">selection modes</h3>
+
+      <p>Four ways to define what gets captured:</p>
+
+      <ul>
+        <li><strong>Click and drag</strong>: draw a freehand rectangle. Hold <strong>Alt</strong> to disable edge snapping.</li>
+        <li><strong>Ctrl + click</strong>: select the window under the cursor. While Ctrl is held, greenflame lifts the window preview above any occluding windows. If the window extends off-screen, the full window is still captured, but only the on-desktop portion is editable; a note beneath the center size label indicates that off-screen pixels are included.</li>
+        <li><strong>Shift + click</strong>: select the entire monitor under the cursor.</li>
+        <li><strong>Shift+Ctrl + click</strong>: select the full virtual desktop (all monitors).</li>
+      </ul>
+
+      <h3 id="adjusting-selection">adjusting the selection</h3>
+
+      <p>Once a region is selected, you can refine it before annotating or saving:</p>
+
+      <ul>
+        <li><strong>Drag the handles</strong> on the selection border to resize it. Hold <strong>Alt</strong> to disable snapping.</li>
+        <li>With <strong>no annotation tool active</strong> (the default), <strong>drag inside the selection</strong> to move it. Hold <strong>Alt</strong> to disable snapping.</li>
+        <li>Press <strong>Ctrl+K</strong> or use the toolbar button to show or hide the <strong>captured cursor</strong>, meaning the cursor as it appeared in the frozen screenshot. This affects the saved image, not the live editing pointer.</li>
+        <li>Press <strong>Ctrl+P</strong> or use the toolbar button to <strong>pin</strong> the current selection as a floating reference window.</li>
+      </ul>
+
+      <h3 id="annotation-manipulation">moving annotations</h3>
+
+      <p>With no annotation tool active, you can manipulate existing annotations:</p>
+
+      <ul>
+        <li><strong>Click and drag an annotation</strong> to select it, then drag inside its bounding box to move it.</li>
+        <li><strong>Ctrl+click</strong> an annotation to add or remove it from the current multi-selection.</li>
+        <li><strong>Ctrl+drag</strong> a marquee to add every touched annotation to the selection.</li>
+        <li>When <strong>multiple annotations</strong> are selected, drag inside the group bounding box to move them all.</li>
+        <li>A selected <strong>line or arrow</strong> shows draggable endpoint handles for reshaping.</li>
+        <li>A selected <strong>rectangle, ellipse, or obfuscate</strong> (exactly one) shows corner and side resize handles.</li>
+      </ul>
+
+      <h2 id="annotation-tools">annotation tools</h2>
+
+      <p>greenflame has 11 tools. Press a hotkey or click the toolbar to toggle a tool on. Pressing the same hotkey again deactivates it and returns to selection mode.</p>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Hotkey</th><th>Tool</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>B</code></td><td>Brush</td><td>Freehand drawing with configurable smoothing</td></tr>
+            <tr><td><code>H</code></td><td>Highlighter</td><td>Semi-transparent freehand stroke with auto-straighten</td></tr>
+            <tr><td><code>L</code></td><td>Line</td><td>Straight line between two points</td></tr>
+            <tr><td><code>A</code></td><td>Arrow</td><td>Straight arrow between two points</td></tr>
+            <tr><td><code>R</code></td><td>Rectangle</td><td>Outlined rectangle</td></tr>
+            <tr><td><code>Shift+R</code></td><td>Filled Rectangle</td><td>Solid-filled rectangle</td></tr>
+            <tr><td><code>E</code></td><td>Ellipse</td><td>Outlined ellipse</td></tr>
+            <tr><td><code>Shift+E</code></td><td>Filled Ellipse</td><td>Solid-filled ellipse</td></tr>
+            <tr><td><code>O</code></td><td>Obfuscate</td><td>Blur or pixelate a rectangular area</td></tr>
+            <tr><td><code>T</code></td><td>Text</td><td>Rich text with formatting, fonts, and spell check</td></tr>
+            <tr><td><code>N</code></td><td>Bubble</td><td>Auto-numbered circle for step-by-step callouts</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="tool-options">color, size &amp; cursor previews</h3>
+
+      <p><strong>Color:</strong> With any tool other than Obfuscate active, <strong>right-click</strong> anywhere (or press <strong>Tab</strong>) to open the <strong>color selection wheel</strong>. Left-click a segment or press Enter to select it. Scroll the mouse wheel or press &uarr;/&darr; to navigate segments without the mouse. Press Escape to dismiss without changing. For Text and Bubble, the wheel has a central hub that switches between 8 color slots and 4 font choices; pressing Tab while the wheel is open cycles between color and font views.</p>
+
+      <p><strong>Size:</strong> With any sized tool active (Brush, Highlighter, Line, Arrow, Rectangle, Ellipse, Bubble, Obfuscate, or Text), use <strong>mouse-wheel up/down</strong> or <strong>Ctrl+= / Ctrl+&minus;</strong> to change that tool's size step (1&ndash;50). Each tool remembers its own independent size setting. For Obfuscate, the size controls <code>block_size</code>: <code>1</code> = blur mode, <code>2..50</code> = block pixelation.</p>
+
+      <p><strong>Cursor previews:</strong> Most tools show a live preview around the cursor to indicate the current stroke size:</p>
+      <ul>
+        <li><strong>Brush</strong> and <strong>Bubble</strong>: anti-aliased circular preview.</li>
+        <li><strong>Highlighter</strong>, <strong>Line</strong>, <strong>Rectangle</strong>, <strong>Ellipse</strong>, and <strong>Obfuscate</strong>: anti-aliased axis-aligned square preview.</li>
+        <li><strong>Arrow</strong>: square preview aligned to the current arrow direction.</li>
+        <li><strong>Text</strong>: the letter "A" in the current font and size, beside the cursor.</li>
+        <li><strong>Filled Rectangle</strong> and <strong>Filled Ellipse</strong>: no cursor preview.</li>
+      </ul>
+
+      <h3 id="text-tool">text</h3>
+
+      <p>With the Text tool active and no draft open, <strong>left-click inside the selection</strong> to start a text annotation. Right-click or press Tab to open the color/font wheel. Use mouse-wheel or Ctrl+=/Ctrl+&minus; to change the text size step (1&ndash;50, mapped to 5&ndash;288 pt).</p>
+
+      <p>Clicking outside a draft commits it if it contains text, or discards it if empty. Committed text annotations can be selected, moved, and deleted, and re-edited. With no annotation tool active, select exactly one text annotation and double-click it to resume editing.</p>
+
+      <p><strong>Spell check:</strong> Live squiggles appear under misspelled words during editing. Configure one or more BCP-47 language tags in <code>tools.text.spell_check_languages</code> (e.g. <code>["en-US", "fr-CA"]</code>). When multiple languages are configured, a word is only flagged if all checkers agree it is misspelled. Squiggles never appear in saved images.</p>
+
+      <p>While editing a draft:</p>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><code>Ctrl+A / C / X / V</code></td><td>Clipboard operations on the draft text</td></tr>
+            <tr><td><code>Ctrl+Z / Ctrl+Shift+Z</code></td><td>Undo / redo within the draft</td></tr>
+            <tr><td><code>Ctrl+B / I / U</code></td><td>Bold / italic / underline</td></tr>
+            <tr><td><code>Alt+Shift+5</code></td><td>Strikethrough</td></tr>
+            <tr><td><code>Insert</code></td><td>Toggle insert / overwrite mode</td></tr>
+            <tr><td><code>Ctrl+Enter</code></td><td>Insert a newline</td></tr>
+            <tr><td><code>Enter</code></td><td>Commit the draft</td></tr>
+            <tr><td><code>Escape</code></td><td>Cancel the draft, keep Text tool armed</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="bubble-tool">bubble</h3>
+
+      <p>Left-click inside the selection to place a numbered circle. The number auto-increments with each placement and decrements on undo. Right-click opens a style wheel; the central hub switches between 8 color slots and 4 font choices. The number color (black or white) is chosen automatically for best contrast against the fill.</p>
+
+      <h3 id="highlighter-tool">highlighter</h3>
+
+      <p>Draw a semi-transparent stroke to emphasize content. While drawing, holding the mouse still for 800&nbsp;ms snaps the stroke to a straight bar from the start point to the cursor. After snapping, the bar tracks the mouse until you release. The snap is one-way and cannot revert to freehand.</p>
+
+      <p>The wait time is configurable via <code>tools.highlighter.pause_straighten_ms</code>. Setting it to <code>0</code> makes every stroke start as a straight bar immediately.</p>
+
+      <h3 id="obfuscate-tool">obfuscate</h3>
+
+      <p>Drag out a rectangle to blur or pixelate the content underneath. <code>block_size = 1</code> uses blur mode; values <code>2..50</code> use block pixelation. Obfuscated regions can be moved and resized after placement, and they recompute automatically when overlapping annotations below them change.</p>
+
+      <div class="callout callout-warn">
+        <strong>Obfuscate is not a security feature.</strong> Pixelated or blurred areas can sometimes be reconstructed, especially around text or strong-contrast details. If you need to permanently hide sensitive content, use a filled opaque shape instead.
+      </div>
+
+      <p>The first time you activate Obfuscate (from the toolbar or by pressing <strong>O</strong>), greenflame shows a warning dialog with this message. You must click <strong>I Understand</strong> to proceed. The acknowledgement is saved to <code>tools.obfuscate.risk_acknowledged</code> in the config and the warning does not appear again.</p>
+
+      <h2 id="saving">saving &amp; sharing</h2>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><code>Ctrl+S</code></td><td>Save directly to the configured default folder in the configured format, then close</td></tr>
+            <tr><td><code>Ctrl+Shift+S</code></td><td>Open Save As dialog, save, then close</td></tr>
+            <tr><td><code>Ctrl+Alt+S</code></td><td>Save directly, copy the saved file to the clipboard, then close</td></tr>
+            <tr><td><code>Ctrl+Shift+Alt+S</code></td><td>Open Save As dialog, save, copy the file to the clipboard, then close</td></tr>
+            <tr><td><code>Ctrl+C</code></td><td>Copy the selection image to the clipboard, then close</td></tr>
+            <tr><td><code>Ctrl+P</code></td><td>Pin the rendered selection as a floating reference, then close</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Save As supports <strong>PNG</strong>, <strong>JPEG</strong>, and <strong>BMP</strong>. When the captured cursor is visible (toggled with Ctrl+K or the toolbar button), it is composited into the screenshot below all annotations. The cursor is never selectable or movable.</p>
+
+      <h3 id="pinned-images">pinned images</h3>
+
+      <p>Pinned images are frameless, always-on-top reference windows with an always-visible green halo. The halo brightens when the pin is focused. Multiple pins can coexist on screen.</p>
+
+      <ul>
+        <li><strong>Drag anywhere</strong> on the pin to reposition it.</li>
+        <li>Use the <strong>mouse wheel</strong> or <strong>Ctrl+= / Ctrl+&minus;</strong> to zoom (25%&ndash;800%).</li>
+        <li><strong>Right-click</strong> the pin for its context menu.</li>
+        <li>Copy and save actions include the current <strong>rotation</strong>, but on-screen <strong>opacity</strong> and the green halo are display-only; they are not baked into exported images.</li>
+      </ul>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><code>Ctrl+C</code></td><td>Copy the active pin to the clipboard</td></tr>
+            <tr><td><code>Ctrl+S</code></td><td>Save the active pin to a file</td></tr>
+            <tr><td><code>Ctrl+Right / Left</code></td><td>Rotate the pin right / left</td></tr>
+            <tr><td><code>Ctrl+= / Ctrl+&minus;</code></td><td>Zoom in / out</td></tr>
+            <tr><td><code>Ctrl+Up / Down</code></td><td>Increase / decrease opacity (holding repeats)</td></tr>
+            <tr><td><code>Escape</code></td><td>Close the active pin</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="command-line">command line</h2>
+
+      <p>Use the command line to capture and save without opening the selection overlay. Target a window by title, a monitor by number, a region by coordinates, or the full desktop. Add padding and annotations from JSON, or annotate an existing image.</p>
+      <p>The examples below use Windows Command Prompt (<code>cmd.exe</code>) with <code>greenflame.exe</code> available in the current folder or on PATH. Use a JSON file to avoid shell-specific quoting when working in PowerShell.</p>
+
+      <p>With no arguments, greenflame starts normally in the tray. Pass any of the flags below for a one-shot capture that writes output and exits.</p>
+
+      <h3 id="cli-capture-modes">capture modes</h3>
+
+      <p>At most one capture mode per invocation:</p>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Option</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>-r, --region &lt;x,y,w,h&gt;</code></td><td>Capture an explicit physical-pixel region</td></tr>
+            <tr><td><code>-w, --window &lt;name&gt;</code></td><td>Capture a visible top-level window by title text</td></tr>
+            <tr><td><code>--window-hwnd &lt;hex&gt;</code></td><td>Capture a visible top-level window by exact hex HWND</td></tr>
+            <tr><td><code>-m, --monitor &lt;id&gt;</code></td><td>Capture a monitor by 1-based id</td></tr>
+            <tr><td><code>-d, --desktop</code></td><td>Capture the full virtual desktop</td></tr>
+            <tr><td><code>--input &lt;path&gt;</code></td><td>Load an existing PNG/JPEG/BMP image (requires <code>--annotate</code>)</td></tr>
+            <tr><td><code>-h, --help</code></td><td>Show help and exit</td></tr>
+            <tr><td><code>-v, --version</code></td><td>Show version and exit</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="cli-output-options">output options</h3>
+
+      <p>These optional flags modify a capture:</p>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Option</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>-o, --output &lt;path&gt;</code></td><td>Output file path</td></tr>
+            <tr><td><code>-t, --format &lt;png|jpg|jpeg|bmp&gt;</code></td><td>Output format override</td></tr>
+            <tr><td><code>-p, --padding &lt;n|h,v|l,t,r,b&gt;</code></td><td>Add synthetic padding in physical pixels</td></tr>
+            <tr><td><code>--padding-color &lt;#rrggbb&gt;</code></td><td>Padding color override (requires <code>--padding</code>)</td></tr>
+            <tr><td><code>--annotate &lt;json|path&gt;</code></td><td>Apply JSON-defined annotations to the render result</td></tr>
+            <tr><td><code>--window-capture &lt;auto|gdi|wgc&gt;</code></td><td>Window-capture backend for <code>--window</code> / <code>--window-hwnd</code></td></tr>
+            <tr><td><code>--cursor</code></td><td>Include the captured cursor for this invocation</td></tr>
+            <tr><td><code>--no-cursor</code></td><td>Exclude the captured cursor for this invocation</td></tr>
+            <tr><td><code>-f, --overwrite</code></td><td>Allow replacing an existing <code>--output</code> file</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Both <code>--option=value</code> and <code>--option value</code> forms are accepted.</p>
+
+      <p><code>--cursor</code> and <code>--no-cursor</code> override the persisted <code>capture.include_cursor</code> config setting for one invocation only. They do not modify the config file.</p>
+
+      <h3 id="cli-padding">padding</h3>
+
+      <p><code>--padding</code> accepts one value (<code>n</code>), two values (<code>h,v</code>), or four values (<code>l,t,r,b</code>). Padding is always synthetic color; it never captures extra screen pixels. When padding is present, any part of the capture area that lies outside the virtual desktop is filled with the resolved padding color instead of being clipped.</p>
+
+      <p>Padding color resolution:</p>
+      <ol>
+        <li><code>--padding-color</code>, if provided on the command line.</li>
+        <li><code>save.padding_color</code> from the config file.</li>
+        <li>Default black (<code>#000000</code>).</li>
+      </ol>
+
+      <pre><code>greenflame.exe --desktop --padding 12
+greenflame.exe --monitor 2 --padding 24,12 --padding-color "#ffffff"
+greenflame.exe --region 1200,100,800,600 --padding 8,16,24,32</code></pre>
+
+      <h3 id="cli-window-matching">window matching</h3>
+
+      <p><code>--window &lt;name&gt;</code> performs a case-insensitive substring search across visible top-level windows. If that search finds exactly one case-insensitive exact-title match, greenflame captures it automatically. If multiple windows remain ambiguous, error output lists each candidate with its HWND, window class, and rect so you can rerun with <code>--window-hwnd</code>.</p>
+
+      <pre><code>greenflame.exe --window "Notepad" --output note.png
+greenflame.exe --window-hwnd 0x0000000000123456 --output exact-window.png</code></pre>
+
+      <h3 id="cli-capture-backends">capture backends</h3>
+
+      <p><code>--window-capture</code> is a CLI-only option that controls how window pixels are obtained. It applies only to <code>--window</code> and <code>--window-hwnd</code>.</p>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Value</th><th>Behavior</th></tr></thead>
+          <tbody>
+            <tr><td><code>auto</code></td><td>Tries Windows Graphics Capture (WGC) first. If WGC fails, prints an info line to <code>stderr</code> and falls back to GDI. This is the default.</td></tr>
+            <tr><td><code>gdi</code></td><td>Uses the legacy GDI desktop-capture path. Captures visible pixels from the virtual desktop and crops to the target window rect. Warns about obscured or off-screen windows.</td></tr>
+            <tr><td><code>wgc</code></td><td>Forces WGC. Does not fall back. Suppresses GDI-only warnings. Exits with code 15 if WGC is unavailable or fails.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The key difference: <strong>GDI</strong> captures what is visible on the desktop, so obscured or off-screen portions may be missing. <strong>WGC</strong> captures the window itself, even when another window is in front of it or it extends beyond the desktop. Minimized windows are rejected in all modes (exit code 13).</p>
+
+      <pre><code>greenflame.exe --window "Notepad" --window-capture gdi --output note-gdi.png
+greenflame.exe --window "Notepad" --window-capture wgc --output note-wgc.png</code></pre>
+
+      <h3 id="cli-output-format">output format</h3>
+
+      <p>greenflame resolves the output image format in this order:</p>
+      <ol>
+        <li>If <code>--output</code> has a supported extension (<code>.png</code>, <code>.jpg</code>, <code>.jpeg</code>, <code>.bmp</code>), that extension defines the format.</li>
+        <li>If <code>--format</code> is provided, it defines the format.</li>
+        <li>With <code>--input</code>, an extensionless <code>--output</code> preserves the probed input format.</li>
+        <li>Otherwise, <code>save.default_save_format</code> from the config applies.</li>
+      </ol>
+
+      <p>If <code>--output</code> extension conflicts with <code>--format</code>, or the extension is unsupported (e.g. <code>.tiff</code>), the command fails. If <code>--output</code> has no extension, greenflame appends one based on the resolved format.</p>
+
+      <h2 id="cli-annotations">CLI annotations</h2>
+
+      <p>greenflame's CLI can apply annotations directly to captured or imported images using a JSON description. This turns the command line into a scriptable annotation engine, useful for build pipelines, automated documentation, and AI agent workflows.</p>
+
+      <pre><code>rem Inline JSON
+greenflame.exe --desktop --annotate "{\"annotations\":[{\"type\":\"arrow\",\"start\":{\"x\":20,\"y\":20},\"end\":{\"x\":200,\"y\":120},\"size\":4,\"color\":\"#ff0000\"}]}"
+
+rem JSON file
+greenflame.exe --region 100,100,400,300 --annotate marks.json --output result.png
+
+rem Annotate an existing image and save a new copy
+greenflame.exe --input screenshot.png --output annotated.png --annotate annotations.json</code></pre>
+
+      <h4>input rules</h4>
+
+      <ul>
+        <li><code>--annotate</code> is valid with any capture mode (<code>--region</code>, <code>--window</code>, <code>--monitor</code>, <code>--desktop</code>) or with <code>--input</code>.</li>
+        <li><code>--input</code> requires <code>--annotate</code>. It also requires either <code>--output</code> or <code>--overwrite</code>.</li>
+        <li><code>--input</code> is incompatible with live capture modes and with <code>--window-capture</code>, <code>--cursor</code>, and <code>--no-cursor</code>.</li>
+        <li>If the value's first non-whitespace character is <code>{</code>, it is treated as inline JSON. Otherwise, it is treated as a file path.</li>
+        <li>Annotation files must be UTF-8 JSON. A UTF-8 BOM is accepted.</li>
+        <li>Imported images must be fully opaque. Any non-opaque alpha fails with exit code 16.</li>
+      </ul>
+
+      <h3 id="cli-ann-schema">schema structure &amp; coordinate spaces</h3>
+
+      <p>Annotation input is a JSON object with this shape:</p>
+
+      <pre><code>{
+  "coordinate_space": "local",
+  "color": "#ff0000",
+  "highlighter_opacity_percent": 50,
+  "font": { "preset": "sans" },
+  "annotations": [
+    { "type": "arrow", "start": {"x": 20, "y": 20}, "end": {"x": 200, "y": 120}, "size": 4 }
+  ]
+}</code></pre>
+
+      <p>Top-level fields:</p>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Field</th><th>Required</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>annotations</code></td><td>Yes</td><td>Array of annotation objects, rendered in order (first is bottommost).</td></tr>
+            <tr><td><code>coordinate_space</code></td><td>No</td><td><code>"local"</code> (default) or <code>"global"</code>. See below.</td></tr>
+            <tr><td><code>color</code></td><td>No</td><td>Default color for annotations that don't specify their own. <code>#rrggbb</code> format.</td></tr>
+            <tr><td><code>highlighter_opacity_percent</code></td><td>No</td><td>Default highlighter transparency (0&ndash;100).</td></tr>
+            <tr><td><code>font</code></td><td>No</td><td>Default font for text and bubble annotations.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>coordinate spaces</h4>
+
+      <p>All coordinates are integer physical pixels.</p>
+
+      <ul>
+        <li><strong><code>local</code></strong>: <code>(0, 0)</code> is the top-left of the captured region or the imported image. This is the default and works with all sources.</li>
+        <li><strong><code>global</code></strong>: <code>(0, 0)</code> is the top-left of the virtual desktop. Valid only for live capture modes. Using <code>"global"</code> with <code>--input</code> fails with exit code 14.</li>
+      </ul>
+
+      <p>Coordinates can be negative or exceed the capture bounds; annotations are not clipped to the source image. When <code>--padding</code> is used, annotations that extend outside the capture area are rendered over the synthetic padding.</p>
+
+      <h4>defaults and overrides</h4>
+
+      <p>Values resolve in this order:</p>
+      <ol>
+        <li>Annotation-level value (if present on the individual annotation)</li>
+        <li>Document-level value (top-level field in the JSON)</li>
+        <li>greenflame config default (from <code>greenflame.json</code>)</li>
+      </ol>
+
+      <p>This applies to color, highlighter opacity, and font. Size resolves from the annotation to that tool’s configured default; there is no document-level size field.</p>
+
+      <h3 id="cli-ann-types">annotation types</h3>
+
+      <p>11 annotation types are available, matching the GUI tools:</p>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Type</th><th>Required fields</th><th>Optional fields</th></tr></thead>
+          <tbody>
+            <tr><td><code>line</code></td><td><code>start</code>, <code>end</code></td><td><code>size</code>, <code>color</code></td></tr>
+            <tr><td><code>arrow</code></td><td><code>start</code>, <code>end</code></td><td><code>size</code>, <code>color</code></td></tr>
+            <tr><td><code>rectangle</code></td><td><code>left</code>, <code>top</code>, <code>width</code>, <code>height</code></td><td><code>size</code>, <code>color</code></td></tr>
+            <tr><td><code>filled_rectangle</code></td><td><code>left</code>, <code>top</code>, <code>width</code>, <code>height</code></td><td><code>color</code></td></tr>
+            <tr><td><code>ellipse</code></td><td><code>center</code>, <code>width</code>, <code>height</code></td><td><code>size</code>, <code>color</code></td></tr>
+            <tr><td><code>filled_ellipse</code></td><td><code>center</code>, <code>width</code>, <code>height</code></td><td><code>color</code></td></tr>
+            <tr><td><code>brush</code></td><td><code>points</code></td><td><code>size</code>, <code>color</code></td></tr>
+            <tr><td><code>highlighter</code></td><td><code>start</code>/<code>end</code> or <code>points</code></td><td><code>size</code>, <code>color</code>, <code>opacity_percent</code></td></tr>
+            <tr><td><code>obfuscate</code></td><td><code>left</code>, <code>top</code>, <code>width</code>, <code>height</code></td><td><code>size</code></td></tr>
+            <tr><td><code>text</code></td><td><code>origin</code>, plus <code>text</code> or <code>spans</code></td><td><code>size</code>, <code>color</code>, <code>font</code></td></tr>
+            <tr><td><code>bubble</code></td><td><code>center</code></td><td><code>size</code>, <code>color</code>, <code>font</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>lines and arrows</h4>
+
+      <p>Both use <code>start</code> and <code>end</code> as <code>{"x": int, "y": int}</code> points, plus an optional <code>size</code> for stroke width.</p>
+
+      <pre><code>{
+  "type": "arrow",
+  "start": { "x": 50, "y": 30 },
+  "end": { "x": 250, "y": 150 },
+  "size": 4,
+  "color": "#ff3b30"
+}</code></pre>
+
+      <h4>rectangles and ellipses</h4>
+
+      <p>Outlined variants accept an optional <code>size</code> for stroke width; when omitted, the tool’s configured size is used. Filled variants do not accept <code>size</code>. Rectangles use <code>left</code>, <code>top</code>, <code>width</code>, <code>height</code>. Ellipses use <code>center</code>, <code>width</code>, <code>height</code>.</p>
+
+      <pre><code>{
+  "type": "rectangle",
+  "left": 10, "top": 10, "width": 200, "height": 120,
+  "size": 3, "color": "#00c2ff"
+}
+
+{
+  "type": "filled_ellipse",
+  "center": { "x": 120, "y": 80 },
+  "width": 100, "height": 60,
+  "color": "#83dd00"
+}</code></pre>
+
+      <h4>brush and highlighter</h4>
+
+      <p>Both accept a <code>points</code> array of <code>{"x": int, "y": int}</code> objects. Brush uses the shared freehand smoothing controlled by <code>tools.brush.smoothing_mode</code>. Point-list Highlighter uses the same smoothing controlled by <code>tools.highlighter.smoothing_mode</code>.</p>
+
+      <p>Highlighter also supports a <strong>straight-bar</strong> form using <code>start</code>/<code>end</code> instead of <code>points</code>. Straight bars bypass freehand smoothing and keep their explicit geometry.</p>
+
+      <pre><code>{
+  "type": "highlighter",
+  "start": { "x": 10, "y": 50 },
+  "end": { "x": 300, "y": 50 },
+  "size": 14,
+  "color": "#ffe66d",
+  "opacity_percent": 40
+}</code></pre>
+
+      <h4>obfuscate</h4>
+
+      <p>Uses rectangle coordinates. <code>size</code> controls the obfuscation mode: <code>1</code> = blur, <code>2..50</code> = block pixelation. Does not accept <code>color</code>, <code>font</code>, or highlighter opacity.</p>
+
+      <pre><code>{
+  "type": "obfuscate",
+  "left": 80, "top": 30, "width": 150, "height": 40,
+  "size": 8
+}</code></pre>
+
+      <div class="callout callout-warn">
+        CLI obfuscate annotations require <code>tools.obfuscate.risk_acknowledged</code> to be <code>true</code> in the config file. If the flag is unset or <code>false</code>, the command fails with exit code 18. Accept the warning once in the GUI, or set the value manually in <code>greenflame.json</code>.
+      </div>
+
+      <h4>bubble</h4>
+
+      <p>Numbered circles placed at <code>center</code>. Numbers are assigned automatically by order in the array: first bubble is 1, second is 2, and so on.</p>
+
+      <pre><code>{
+  "type": "bubble",
+  "center": { "x": 40, "y": 40 },
+  "size": 12,
+  "color": "#ff7a00",
+  "font": { "preset": "sans" }
+}</code></pre>
+
+      <h3 id="cli-ann-text">text &amp; fonts</h3>
+
+      <p>Text annotations support either plain text or rich text with per-span formatting.</p>
+
+      <h4>plain text</h4>
+
+      <pre><code>{
+  "type": "text",
+  "origin": { "x": 20, "y": 20 },
+  "size": 18,
+  "text": "Hello\nworld"
+}</code></pre>
+
+      <h4>rich text (spans)</h4>
+
+      <p>Use the <code>spans</code> array for mixed formatting. Each span requires a <code>text</code> string and can toggle <code>bold</code>, <code>italic</code>, <code>underline</code>, and <code>strikethrough</code>. Spans cannot override <code>color</code>, <code>font</code>, or <code>size</code>; those are set at the annotation level.</p>
+
+      <pre><code>{
+  "type": "text",
+  "origin": { "x": 20, "y": 20 },
+  "size": 18,
+  "color": "#ff00ff",
+  "spans": [
+    { "text": "Step 1", "bold": true },
+    { "text": "\nCollect logs", "underline": true },
+    { "text": "\nConfirm repro", "italic": true }
+  ]
+}</code></pre>
+
+      <div class="callout callout-note">
+        <code>text</code> and <code>spans</code> are mutually exclusive. Including both is an error. Strings use normal JSON escaping.
+      </div>
+
+      <h4>fonts</h4>
+
+      <p>Fonts use a tagged union: either a preset name or an explicit installed family:</p>
+
+      <pre><code>// Preset (resolves via config)
+{ "preset": "mono" }
+
+// Explicit installed font
+{ "family": "Consolas" }</code></pre>
+
+      <p>Available presets: <code>sans</code>, <code>serif</code>, <code>mono</code>, <code>art</code>. These resolve to the font families configured in <code>tools.font.*</code> (Arial, Times New Roman, Courier New, and Comic Sans MS by default).</p>
+
+      <p>If an explicit <code>family</code> is not installed on the system, the command fails with exit code 14.</p>
+
+      <h3 id="cli-ann-colors">colors, transparency &amp; size</h3>
+
+      <ul>
+        <li>Colors use <code>#rrggbb</code> format. Alpha is not encoded in the color string.</li>
+        <li>Highlighter transparency uses <code>opacity_percent</code> on an annotation, or <code>highlighter_opacity_percent</code> for the document default (0&ndash;100).</li>
+        <li><code>size</code> uses the same 1&ndash;50 step concept as the GUI.</li>
+      </ul>
+
+      <p>What <code>size</code> controls per type:</p>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Type</th><th>Size controls</th></tr></thead>
+          <tbody>
+            <tr><td><code>brush, line, arrow, rectangle, ellipse</code></td><td>Stroke width</td></tr>
+            <tr><td><code>highlighter</code></td><td>Highlighter bar width</td></tr>
+            <tr><td><code>text</code></td><td><code>size</code>, Text point size (mapped from step 1&ndash;50 to 5&ndash;288 pt)</td></tr>
+            <tr><td><code>bubble</code></td><td>Circle diameter</td></tr>
+            <tr><td><code>obfuscate</code></td><td><code>size</code>, 1 = blur, 2&ndash;50 = block pixelation</td></tr>
+            <tr><td><code>filled_rectangle, filled_ellipse</code></td><td>Not applicable (no <code>size</code> field)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="cli-ann-validation">validation &amp; rendering</h3>
+
+      <h4>validation</h4>
+
+      <p>Validation is strict. greenflame does not partially apply a document. If any part of the annotation payload is invalid, the entire command fails with exit code 14.</p>
+
+      <ul>
+        <li>Unknown properties are errors.</li>
+        <li>Invalid property combinations are errors.</li>
+        <li>Wrong types are errors.</li>
+        <li>Missing required fields are errors.</li>
+        <li>Malformed JSON is an error.</li>
+      </ul>
+
+      <h4>rendering order</h4>
+
+      <p>For CLI renders, greenflame builds the output image in this order:</p>
+
+      <ol>
+        <li>Source image pixels.</li>
+        <li>Synthetic fill for off-desktop regions (live captures only).</li>
+        <li>Outer padding (when <code>--padding</code> is used).</li>
+        <li>Annotations, in array order.</li>
+      </ol>
+
+      <p>Annotations always appear on top of the final image, including any padded area. Obfuscate annotations affect the pixels beneath them and earlier annotations, and they recompute when overlapping annotations below them change.</p>
+
+      <h4>complete example</h4>
+
+      <p>A full annotation file that uses multiple types, document-level defaults, and per-annotation overrides:</p>
+
+      <pre><code>{
+  "coordinate_space": "local",
+  "color": "#ff3b30",
+  "highlighter_opacity_percent": 35,
+  "font": { "preset": "mono" },
+  "annotations": [
+    {
+      "type": "rectangle",
+      "left": -18, "top": -12, "width": 170, "height": 90,
+      "size": 3
+    },
+    {
+      "type": "highlighter",
+      "points": [
+        {"x": -12, "y": 28}, {"x": 48, "y": 32},
+        {"x": 132, "y": 30}, {"x": 188, "y": 36}
+      ],
+      "size": 11, "color": "#ffe66d"
+    },
+    {
+      "type": "arrow",
+      "start": {"x": 168, "y": 84}, "end": {"x": 24, "y": 22},
+      "size": 5, "color": "#00c2ff"
+    },
+    {
+      "type": "text",
+      "origin": {"x": 12, "y": 96},
+      "size": 20, "color": "#ff00ff",
+      "spans": [
+        {"text": "Step 1", "bold": true},
+        {"text": "\nCollect\tlogs", "underline": true},
+        {"text": "\nConfirm repro", "italic": true}
+      ]
+    },
+    {
+      "type": "bubble",
+      "center": {"x": 8, "y": 8},
+      "size": 12
+    },
+    {
+      "type": "line",
+      "start": {"x": -20, "y": 150}, "end": {"x": 220, "y": 150},
+      "size": 2, "color": "#7fff00"
+    },
+    {
+      "type": "bubble",
+      "center": {"x": 196, "y": 146},
+      "size": 14, "font": {"preset": "sans"}, "color": "#ff7a00"
+    }
+  ]
+}</code></pre>
+
+      <p>In this example, the rectangle inherits the document-level <code>"#ff3b30"</code> color, while the arrow and highlighter override it with their own. The first bubble inherits the document-level <code>"mono"</code> font, while the second overrides it with <code>"sans"</code>. Negative coordinates on the rectangle and line extend the annotations beyond the top-left of the capture area.</p>
+
+      <h2 id="exit-codes">exit codes</h2>
+
+      <p>Non-zero codes are unique and never reused. Scripts can rely on specific codes to diagnose failures.</p>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Code</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>0</code></td><td>Success (includes <code>--help</code>, <code>--version</code>, and "already running" tray startup)</td></tr>
+            <tr><td><code>1</code></td><td>Failed to register application window classes</td></tr>
+            <tr><td><code>2</code></td><td>CLI argument parse/validation failed</td></tr>
+            <tr><td><code>3</code></td><td>Failed to create tray window</td></tr>
+            <tr><td><code>4</code></td><td>Failed to enforce single-instance tray mode</td></tr>
+            <tr><td><code>5</code></td><td><code>--region</code> capture requested but region data is missing</td></tr>
+            <tr><td><code>6</code></td><td><code>--window</code> matched no visible window</td></tr>
+            <tr><td><code>7</code></td><td><code>--window</code> matched multiple windows (ambiguous)</td></tr>
+            <tr><td><code>8</code></td><td><code>--monitor</code> requested but no monitors are available</td></tr>
+            <tr><td><code>9</code></td><td><code>--monitor</code> id is out of range</td></tr>
+            <tr><td><code>10</code></td><td>Output path resolution/reservation failed</td></tr>
+            <tr><td><code>11</code></td><td>Capture/save operation failed</td></tr>
+            <tr><td><code>12</code></td><td>Matched window became unavailable before capture</td></tr>
+            <tr><td><code>13</code></td><td>Matched window is minimized</td></tr>
+            <tr><td><code>14</code></td><td><code>--annotate</code> input is invalid (file read, JSON, validation, or missing explicit font family)</td></tr>
+            <tr><td><code>15</code></td><td>Forced <code>--window-capture wgc</code> failed (unsupported, setup/frame failure, or size mismatch)</td></tr>
+            <tr><td><code>16</code></td><td><code>--input</code> image is unreadable, unsupported format, or has transparency</td></tr>
+            <tr><td><code>17</code></td><td>Window has <code>WDA_EXCLUDEFROMCAPTURE</code> display affinity; cannot be captured</td></tr>
+            <tr><td><code>18</code></td><td>CLI obfuscate usage rejected because <code>tools.obfuscate.risk_acknowledged</code> is not <code>true</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="keyboard-reference">keyboard reference</h2>
+
+      <p>All shortcuts in one place.</p>
+
+      <h3>system hotkeys</h3>
+
+      <p>These use the <strong>Print Screen</strong> key with modifier combinations. They are also available from the tray icon's right-click context menu.</p>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Hotkey</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><code>Prt Scrn</code></td><td>Start interactive capture (select a region)</td></tr>
+            <tr><td><code>Ctrl+Prt Scrn</code></td><td>Copy the current window to the clipboard</td></tr>
+            <tr><td><code>Shift+Prt Scrn</code></td><td>Copy the current monitor to the clipboard</td></tr>
+            <tr><td><code>Ctrl+Shift+Prt Scrn</code></td><td>Copy the full desktop to the clipboard</td></tr>
+            <tr><td><code>Alt+Prt Scrn</code></td><td>Recapture the last captured region (same coordinates)</td></tr>
+            <tr><td><code>Ctrl+Alt+Prt Scrn</code></td><td>Recapture the last captured window (wherever it is now)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The last two require a previous capture in the current session. If none exists, or the previously captured window is closed or minimized, a warning toast is shown. Direct clipboard captures honor <code>capture.include_cursor</code> and do not open the overlay.</p>
+
+      <h3>overlay: annotation tools</h3>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><code>B</code></td><td>Toggle Brush</td></tr>
+            <tr><td><code>H</code></td><td>Toggle Highlighter</td></tr>
+            <tr><td><code>L</code></td><td>Toggle Line</td></tr>
+            <tr><td><code>A</code></td><td>Toggle Arrow</td></tr>
+            <tr><td><code>R / Shift+R</code></td><td>Toggle Rectangle / Filled Rectangle</td></tr>
+            <tr><td><code>E / Shift+E</code></td><td>Toggle Ellipse / Filled Ellipse</td></tr>
+            <tr><td><code>O</code></td><td>Toggle Obfuscate</td></tr>
+            <tr><td><code>T</code></td><td>Toggle Text</td></tr>
+            <tr><td><code>N</code></td><td>Toggle Bubble</td></tr>
+            <tr><td><code>Tab</code></td><td>Open color / font wheel for the active tool</td></tr>
+            <tr><td><code>Ctrl+= / Ctrl+&minus;</code></td><td>Increase / decrease active tool size</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>overlay: general</h3>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><code>Ctrl+S</code></td><td>Save to default folder</td></tr>
+            <tr><td><code>Ctrl+Shift+S</code></td><td>Save As dialog</td></tr>
+            <tr><td><code>Ctrl+Alt+S</code></td><td>Save + copy file to clipboard</td></tr>
+            <tr><td><code>Ctrl+Shift+Alt+S</code></td><td>Save As + copy file to clipboard</td></tr>
+            <tr><td><code>Ctrl+C</code></td><td>Copy selection to clipboard</td></tr>
+            <tr><td><code>Ctrl+P</code></td><td>Pin selection to desktop</td></tr>
+            <tr><td><code>Ctrl+K</code></td><td>Show / hide captured cursor</td></tr>
+            <tr><td><code>Delete</code></td><td>Remove selected annotation(s)</td></tr>
+            <tr><td><code>Ctrl+Z</code></td><td>Undo</td></tr>
+            <tr><td><code>Ctrl+Shift+Z</code></td><td>Redo</td></tr>
+            <tr><td><code>Escape</code></td><td>Cancel or go back</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>text editing</h3>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><code>Ctrl+A / C / X / V</code></td><td>Clipboard operations on the draft</td></tr>
+            <tr><td><code>Ctrl+Z / Ctrl+Shift+Z</code></td><td>Undo / redo within the draft</td></tr>
+            <tr><td><code>Ctrl+B / I / U</code></td><td>Bold / italic / underline</td></tr>
+            <tr><td><code>Alt+Shift+5</code></td><td>Strikethrough</td></tr>
+            <tr><td><code>Insert</code></td><td>Toggle insert / overwrite mode</td></tr>
+            <tr><td><code>Ctrl+Enter</code></td><td>Insert a newline</td></tr>
+            <tr><td><code>Enter</code></td><td>Commit the draft</td></tr>
+            <tr><td><code>Escape</code></td><td>Cancel the draft</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>pinned images</h3>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><code>Ctrl+C</code></td><td>Copy the active pin to clipboard</td></tr>
+            <tr><td><code>Ctrl+S</code></td><td>Save the active pin to a file</td></tr>
+            <tr><td><code>Ctrl+Right / Left</code></td><td>Rotate right / left</td></tr>
+            <tr><td><code>Ctrl+= / Ctrl+&minus;</code></td><td>Zoom in / out</td></tr>
+            <tr><td><code>Ctrl+Up / Down</code></td><td>Increase / decrease opacity</td></tr>
+            <tr><td><code>Escape</code></td><td>Close the active pin</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="configuration">configuration</h2>
+
+      <p>greenflame reads its config from:</p>
+      <pre><code>%USERPROFILE%\.config\greenflame\greenflame.json</code></pre>
+      <p>The tables below list the available settings and their defaults. You only need to supply the values you want to change.</p>
+
+      <h3 id="config-capture">capture settings (<code>capture.*</code>)</h3>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Key</th><th>Default</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>capture.include_cursor</code></td>
+              <td><code>false</code></td>
+              <td>Include the captured cursor by default for live captures. Interactive captures can still toggle it with <strong>Ctrl+K</strong>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="config-ui">UI settings (<code>ui.*</code>)</h3>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Key</th><th>Default</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>ui.show_balloons</code></td><td><code>true</code></td><td>Show tray toast notifications after copy/save actions.</td></tr>
+            <tr><td><code>ui.show_selection_size_side_labels</code></td><td><code>true</code></td><td>Show selection-size labels outside the selection (width on top/bottom, height on left/right).</td></tr>
+            <tr><td><code>ui.show_selection_size_center_label</code></td><td><code>true</code></td><td>Show centered <code>W &times; H</code> size label inside the selection.</td></tr>
+            <tr><td><code>ui.tool_size_overlay_duration_ms</code></td><td><code>800</code></td><td>How long the centered tool-size overlay stays visible after a size change. <code>0</code> disables it.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="config-tools">tool settings (<code>tools.*</code>)</h3>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Key</th><th>Default</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>tools.brush.size</code></td><td><code>2</code></td><td>Brush tool size step (1&ndash;50).</td></tr>
+            <tr><td><code>tools.brush.smoothing_mode</code></td><td><code>smooth</code></td><td>Freehand brush smoothing. Accepted values: <code>off</code>, <code>smooth</code>.</td></tr>
+            <tr><td><code>tools.line.size</code></td><td><code>2</code></td><td>Line tool size step (1&ndash;50).</td></tr>
+            <tr><td><code>tools.arrow.size</code></td><td><code>2</code></td><td>Arrow tool size step (1&ndash;50).</td></tr>
+            <tr><td><code>tools.rect.size</code></td><td><code>2</code></td><td>Rectangle tool size step (1&ndash;50).</td></tr>
+            <tr><td><code>tools.ellipse.size</code></td><td><code>2</code></td><td>Ellipse tool size step (1&ndash;50).</td></tr>
+            <tr><td><code>tools.colors</code></td><td><code>{}</code></td><td>Annotation color wheel slots (indices 0&ndash;7). Object with slot-index keys, e.g. <code>{"4": "#ff00ff"}</code>.</td></tr>
+            <tr><td><code>tools.current_color</code></td><td><code>0</code></td><td>Active annotation color slot index (0&ndash;7).</td></tr>
+            <tr><td><code>tools.font.sans</code></td><td><code>Arial</code></td><td>Font family for the <code>sans</code> slot (shared by Text and Bubble).</td></tr>
+            <tr><td><code>tools.font.serif</code></td><td><code>Times New Roman</code></td><td>Font family for the <code>serif</code> slot.</td></tr>
+            <tr><td><code>tools.font.mono</code></td><td><code>Courier New</code></td><td>Font family for the <code>mono</code> slot.</td></tr>
+            <tr><td><code>tools.font.art</code></td><td><code>Comic Sans MS</code></td><td>Font family for the <code>art</code> slot.</td></tr>
+            <tr><td><code>tools.highlighter.size</code></td><td><code>10</code></td><td>Highlighter size step (1&ndash;50).</td></tr>
+            <tr><td><code>tools.highlighter.colors</code></td><td><code>{}</code></td><td>Highlighter color wheel slots (indices 0&ndash;5).</td></tr>
+            <tr><td><code>tools.highlighter.current_color</code></td><td><code>0</code></td><td>Active highlighter color slot index (0&ndash;5).</td></tr>
+            <tr><td><code>tools.highlighter.opacity_percent</code></td><td><code>33</code></td><td>Highlighter opacity for preview and output (0&ndash;100).</td></tr>
+            <tr><td><code>tools.highlighter.smoothing_mode</code></td><td><code>smooth</code></td><td>Freehand highlighter smoothing. <code>off</code> or <code>smooth</code>. Straightened bars bypass this.</td></tr>
+            <tr><td><code>tools.highlighter.pause_straighten_ms</code></td><td><code>800</code></td><td>Milliseconds of stillness before a stroke snaps to a straight bar. <code>0</code> = always straight.</td></tr>
+            <tr><td><code>tools.highlighter.pause_straighten_deadzone_px</code></td><td><code>0</code></td><td>Pixel threshold before the pause timer resets. <code>0</code> = any movement resets.</td></tr>
+            <tr><td><code>tools.text.size</code></td><td><code>10</code></td><td>Text tool size step (1&ndash;50, mapped to 5&ndash;288 pt).</td></tr>
+            <tr><td><code>tools.text.current_font</code></td><td><code>sans</code></td><td>Active font slot for Text. Values: <code>sans</code>, <code>serif</code>, <code>mono</code>, <code>art</code>.</td></tr>
+            <tr><td><code>tools.text.spell_check_languages</code></td><td><code>[]</code></td><td>BCP-47 tags for spell-check (e.g. <code>["en-US"]</code>). Empty = disabled.</td></tr>
+            <tr><td><code>tools.bubble.size</code></td><td><code>10</code></td><td>Bubble size step (1&ndash;50).</td></tr>
+            <tr><td><code>tools.bubble.current_font</code></td><td><code>sans</code></td><td>Active font slot for Bubble. Values: <code>sans</code>, <code>serif</code>, <code>mono</code>, <code>art</code>.</td></tr>
+            <tr><td><code>tools.obfuscate.block_size</code></td><td><code>10</code></td><td>Obfuscate block size (1&ndash;50). <code>1</code> = blur; <code>2..50</code> = block pixelation.</td></tr>
+            <tr><td><code>tools.obfuscate.risk_acknowledged</code></td><td><code>false</code></td><td>Must be <code>true</code> for CLI obfuscate usage.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="config-save">save settings (<code>save.*</code>)</h3>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Key</th><th>Default</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>save.default_save_dir</code></td><td><code>~/Pictures/greenflame</code></td><td>Folder used by <strong>Ctrl+S</strong>, <strong>Ctrl+Alt+S</strong>, and CLI captures without <code>--output</code>.</td></tr>
+            <tr><td><code>save.last_save_as_dir</code></td><td><code>falls back to default_save_dir</code></td><td>Initial folder for Save As dialogs.</td></tr>
+            <tr><td><code>save.default_save_format</code></td><td><code>png</code></td><td>Default format for direct saves and extensionless CLI output. Values: <code>png</code>, <code>jpg</code>, <code>bmp</code>.</td></tr>
+            <tr><td><code>save.padding_color</code></td><td><code>#000000</code></td><td>Padding color for CLI <code>--padding</code> when <code>--padding-color</code> is not supplied.</td></tr>
+            <tr><td><code>save.filename_pattern_region</code></td><td><code>screenshot-${YYYY}-${MM}-${DD}_${hh}${mm}${ss}</code></td><td>Filename pattern for region captures.</td></tr>
+            <tr><td><code>save.filename_pattern_desktop</code></td><td><code>screenshot-${YYYY}-${MM}-${DD}_${hh}${mm}${ss}</code></td><td>Filename pattern for desktop captures.</td></tr>
+            <tr><td><code>save.filename_pattern_monitor</code></td><td><code>screenshot-&hellip;-monitor${monitor}</code></td><td>Filename pattern for monitor captures.</td></tr>
+            <tr><td><code>save.filename_pattern_window</code></td><td><code>screenshot-&hellip;-${title}</code></td><td>Filename pattern for window captures.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="filename-patterns">filename patterns</h3>
+
+      <p>Filenames use Greenshot-style <code>${VARIABLE}</code> placeholders:</p>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Reference table; scroll horizontally on small screens">
+        <table>
+          <thead><tr><th>Variable</th><th>Expansion</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><code>${YYYY}</code></td><td>4-digit year</td><td><code>2026</code></td></tr>
+            <tr><td><code>${YY}</code></td><td>2-digit year</td><td><code>26</code></td></tr>
+            <tr><td><code>${MM}</code></td><td>2-digit month</td><td><code>02</code></td></tr>
+            <tr><td><code>${DD}</code></td><td>2-digit day</td><td><code>21</code></td></tr>
+            <tr><td><code>${hh}</code></td><td>2-digit hour (24 h)</td><td><code>14</code></td></tr>
+            <tr><td><code>${mm}</code></td><td>2-digit minute</td><td><code>30</code></td></tr>
+            <tr><td><code>${ss}</code></td><td>2-digit second</td><td><code>25</code></td></tr>
+            <tr><td><code>${title}</code></td><td>Sanitized window title (spaces and invalid chars become <code>_</code>; max 50 chars; falls back to <code>window</code>)</td><td><code>My_App</code></td></tr>
+            <tr><td><code>${monitor}</code></td><td>1-based monitor number</td><td><code>2</code></td></tr>
+            <tr><td><code>${num}</code></td><td>6-digit zero-padded incrementing counter (next available by directory scan)</td><td><code>000042</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>example configuration</h3>
+
+      <pre><code>{
+  "capture": {
+    "include_cursor": true
+  },
+  "ui": {
+    "show_balloons": true,
+    "tool_size_overlay_duration_ms": 800
+  },
+  "tools": {
+    "font": {
+      "sans": "Arial",
+      "serif": "Times New Roman",
+      "mono": "Courier New",
+      "art": "Comic Sans MS"
+    },
+    "colors": { "4": "#ff00ff" },
+    "current_color": 0,
+    "brush": { "size": 2, "smoothing_mode": "smooth" },
+    "highlighter": {
+      "opacity_percent": 33,
+      "pause_straighten_ms": 800
+    },
+    "obfuscate": { "block_size": 10, "risk_acknowledged": true },
+    "text": {
+      "size": 14,
+      "current_font": "sans",
+      "spell_check_languages": ["en-US"]
+    }
+  },
+  "save": {
+    "default_save_dir": "C:\\Users\\you\\Pictures\\greenflame",
+    "default_save_format": "png",
+    "filename_pattern_window": "screenshot-${YYYY}-${MM}-${DD}_${hh}${mm}${ss}-${title}"
+  }
+}</code></pre>
+
+    </main>
+        </div>
+        <footer><a class="footer-brand" href="/">greenflame<span>.</span></a><span>made to make a point.<br>free software / MIT licensed</span><nav aria-label="Footer navigation"><span><a href="https://github.com/greenflamehq/greenflame/releases">releases</a> <span aria-hidden="true">↗</span></span><span><a href="https://github.com/greenflamehq/greenflame/issues">report an issue</a> <span aria-hidden="true">↗</span></span><span><a href="https://github.com/greenflamehq/greenflame">source code</a> <span aria-hidden="true">↗</span></span></nav><div class="back-top"><a href="#">back to top</a> <span aria-hidden="true">↑</span></div></footer>
+    </div>
+</body>
+</html>

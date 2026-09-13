@@ -3,6 +3,13 @@
 The static website for [greenflame](https://github.com/greenflamehq/greenflame),
 published with GitHub Pages at <https://getgreenflame.com>.
 
+The user guide lives in `guide.html` and shares `style.css` with the homepage;
+`guide.css` contains the reference-page layout. It adapts the former guide without
+its unfinished screenshot placeholders. Check behavior against the application's
+README and annotation schema when updating it. Run `node guide.test.mjs` and
+preview the contents navigation, tables, and code examples at desktop and phone
+widths before publishing. The guide needs no JavaScript.
+
 Edit `index.html` and `style.css`, then push to `main` to publish an update.
 No build step is required. `greenflame.png` is the existing application logo.
 The masthead uses the flame path from the application logo. `downloads.js`
