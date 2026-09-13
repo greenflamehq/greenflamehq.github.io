@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 const html = await readFile(new URL('index.html', import.meta.url), 'utf8');
-assert.equal((html.match(/class="bracket-card"/g) || []).length, 6);
+assert.equal((html.match(/class="bracket-card"/g) || []).length, 7);
+const selected = await readFile(new URL('brackets/7.svg', import.meta.url), 'utf8');
+assert.ok(selected.includes('fill="#808173"') && selected.includes('fill="#559800"') && selected.includes('fill="#eeecdf"'));
+assert.ok(html.includes('id="selected-palette"') && html.includes('3.01:1'));
 assert.ok(html.includes('id="brightness-only"') && html.includes('not a color-blindness simulation'));
 for (const match of html.matchAll(/(?:src|href)="(brackets\/[^"]+)"/g)) {
     assert.ok((await readFile(new URL(match[1], import.meta.url))).length, 'Comparison asset exists');

@@ -5,8 +5,8 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 const cwd = fileURLToPath(new URL('.', import.meta.url));
 const base = readFileSync(new URL('greenflame-7b.svg', import.meta.url), 'utf8');
-const colors = ['30312e', '50514b', '68695f', '808173', '98998a', 'b0b19f'];
-const names = ['Original charcoal', 'Soft charcoal', 'Mid gray', 'Quiet gray', 'Light gray', 'Pale gray'];
+const colors = ['30312e', '50514b', '68695f', '808173', '98998a', 'b0b19f', '808173'];
+const names = ['Original charcoal', 'Soft charcoal', 'Mid gray', 'Quiet gray', 'Light gray', 'Pale gray', 'D + darker flame'];
 const linear = c => c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
 const luminance = hex => hex.match(/../g).map(c => linear(parseInt(c, 16) / 255)).reduce((s, c, i) => s + c * [0.2126, 0.7152, 0.0722][i], 0);
 const contrast = hex => (luminance('eeecdf') + 0.05) / (luminance(hex) + 0.05);
@@ -22,9 +22,11 @@ const magick = args => execFileSync('magick', args, { cwd, maxBuffer: 8 * 1024 *
 let previous = Infinity;
 const cards = colors.map((color, index) => {
     const prefix = `brackets/${index + 1}`;
-    const svg = base.replace('fill="#30312e"', `fill="#${color}"`);
-    assert.equal(svg.replace(`fill="#${color}"`, 'fill="#30312e"'), base, 'Only bracket color may change');
-    assert.ok(contrast(color) < previous); previous = contrast(color);
+    const flame = index === 6 ? '559800' : '78d600';
+    const svg = base.replace('fill="#30312e"', `fill="#${color}"`).replace('fill="#78d600"', `fill="#${flame}"`);
+    assert.equal(svg.replace(`fill="#${color}"`, 'fill="#30312e"').replace(`fill="#${flame}"`, 'fill="#78d600"'), base, 'Only the requested colors may change');
+    if (index < 6) { assert.ok(contrast(color) < previous); previous = contrast(color); }
+    else { assert.ok(contrast(flame) >= 3 && contrast(color) >= 3); }
     writeFileSync(new URL(prefix + '.svg', import.meta.url), svg);
     const monochrome = svg.replace(/#[0-9a-f]{6}/g, hex => '#' + gray(hex.slice(1)));
     writeFileSync(new URL(prefix + '-gray.svg', import.meta.url), monochrome);
@@ -48,10 +50,10 @@ const cards = colors.map((color, index) => {
         }
     }
     const picture = (size, zoom = false) => `<span class="bracket-sample"><span class="bracket-image${zoom ? ' pixel-zoom' : ''}"><img class="color-view" src="${prefix}-${size}.png" width="${zoom ? 96 : size}" height="${zoom ? 96 : size}" alt="${names[index]} at ${size}px${zoom ? ', enlarged six times' : ''}"><img class="gray-view" src="${prefix}-gray-${size}.png" width="${zoom ? 96 : size}" height="${zoom ? 96 : size}" alt="${names[index]} brightness-only at ${size}px${zoom ? ', enlarged six times' : ''}"></span><span>${zoom ? '16px × 6 (pixels)' : size + 'px'}</span></span>`;
-    return `<article class="bracket-card"><h3>${String.fromCharCode(65 + index)} · ${names[index]}</h3><p><code>#${color}</code> · brackets ${contrast(color).toFixed(2)}:1${index === 0 ? ' · RC8 baseline' : ''}</p><div class="bracket-strip">${[16, 24, 32, 48, 64].map(size => picture(size)).join('')}</div><div class="bracket-large">${picture(16, true)}${picture(128)}</div><p><a href="${prefix}.svg" download>Beige SVG</a> · <a href="${prefix}-256.png" download>256px PNG</a></p></article>`;
+    return `<article class="bracket-card"${index === 6 ? ' id="selected-palette"' : ''}><h3>${String.fromCharCode(65 + index)} · ${names[index]}</h3><p><code>#${color}</code> · brackets ${contrast(color).toFixed(2)}:1${index === 0 ? ' · RC8 baseline' : ''}</p>${index === 6 ? `<p>Selected combination · flame <code>#${flame}</code> <strong>${contrast(flame).toFixed(2)}:1</strong> · beige <code>#eeecdf</code>. Both flat colors meet 3:1 against the background.</p>` : ''}<div class="bracket-strip">${[16, 24, 32, 48, 64].map(size => picture(size)).join('')}</div><div class="bracket-large">${picture(16, true)}${picture(128)}</div><p><a href="${prefix}.svg" download>Beige SVG</a> · <a href="${prefix}-256.png" download>256px PNG</a></p></article>`;
 });
 const pageFile = new URL('index.html', import.meta.url);
 const page = readFileSync(pageFile, 'utf8');
 assert.ok(page.includes('<!-- BRACKET_CARDS -->') && page.includes('<!-- /BRACKET_CARDS -->'));
 writeFileSync(pageFile, page.replace(/<!-- BRACKET_CARDS -->[\s\S]*?<!-- \/BRACKET_CARDS -->/, '<!-- BRACKET_CARDS -->\n' + cards.join('\n') + '\n<!-- /BRACKET_CARDS -->'));
-console.log('Six shades generated; only bracket color changes. Contrast order, paired grayscale, seven sizes and exact 16px borders checked.');
+console.log('Six bracket shades plus the selected darker-flame combination generated. Contrast, paired grayscale, seven sizes and exact 16px borders checked.');
