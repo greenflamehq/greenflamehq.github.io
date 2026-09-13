@@ -5,6 +5,11 @@ published with GitHub Pages at <https://getgreenflame.com>.
 
 Edit `index.html` and `style.css`, then push to `main` to publish an update.
 No build step is required. `greenflame.png` is the existing application logo.
+The masthead uses the flame path from the application logo. `downloads.js`
+refreshes the version and direct installer/portable links from the newest
+published GitHub release (including pre-releases). The verified links in HTML
+remain available without JavaScript or if the API fails; refresh that fallback
+when updating the site. Run `node downloads.test.mjs` to check this behavior.
 The green accent (`#78D600`) is sampled from that logo. The Jost regular and
 bold fonts are self-hosted; their license is in `OFL-Jost.txt`.
 

@@ -10,16 +10,17 @@
     <link rel="canonical" href="https://getgreenflame.com/">
     <link rel="preload" href="jost-bold.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="stylesheet" href="style.css">
+    <script src="downloads.js" defer></script>
 </head>
 <body>
     <a class="skip" href="#main">Skip to content</a>
     <div class="sheet">
         <header>
             <div class="masthead">
-                <a class="identity" href="/" aria-label="greenflame home"><span class="identity-mark" aria-hidden="true"></span> an instrument for clear communication</a>
-                <nav aria-label="Main navigation"><a href="#tools">the tools</a><a href="https://github.com/greenflamehq/greenflame#readme">the guide <span aria-hidden="true">↗</span></a><a href="https://github.com/greenflamehq/greenflame">the source <span aria-hidden="true">↗</span></a></nav>
+                <a class="identity" href="/" aria-label="greenflame home">an instrument for clear communication</a>
+                <nav aria-label="Main navigation"><a href="#tools">the tools</a><span><a href="https://github.com/greenflamehq/greenflame#readme">the guide</a> <span aria-hidden="true">↗</span></span><span><a href="https://github.com/greenflamehq/greenflame">the source</a> <span aria-hidden="true">↗</span></span></nav>
             </div>
-            <div class="nameplate"><a class="wordmark" href="/" aria-label="greenflame home">greenflame<span class="brand-dot">.</span></a><span class="edition">screen capture<br>for windows / 01</span></div>
+            <div class="nameplate"><a class="wordmark" href="/" aria-label="greenflame home"><svg class="wordmark-flame" viewBox="319 122 578 930" aria-hidden="true"><path d="M648 122C747 212 796 311 794 426C794 516 767 568 746 621C724 676 737 691 758 721C800 685 826 638 826 585C876 646 897 706 897 770C897 932 767 1052 609 1052C449 1052 319 931 319 775C319 640 410 552 504 461C614 357 684 239 648 122Z"/></svg><span>greenflame<span class="brand-dot">.</span></span></a><span class="edition">screen capture<br>for windows / 01</span></div>
         </header>
         <main id="main">
             <section class="hero" aria-labelledby="headline">
@@ -27,8 +28,14 @@
                     <p class="eyebrow"><span class="little-square" aria-hidden="true"></span> find your frame</p>
                     <h1 id="headline">less noise.<br>more <span class="highlight">point.</span></h1>
                     <p class="intro">A screenshot is a starting point.<br>Capture what matters. Mark it up.<br>Make yourself understood.</p>
-                    <a class="download" href="https://github.com/greenflamehq/greenflame/releases/latest"><span>get greenflame</span><span class="download-arrow" aria-hidden="true">↘</span></a>
-                    <p class="download-note">Windows 11 · Free &amp; open source<br>Installer or portable. Your choice.</p>
+                    <div id="downloads">
+                        <p class="download-heading">get greenflame <span class="release-version" id="release-version">v1.0.0-rc9 · pre-release</span></p>
+                        <div class="download-options">
+                            <a class="download" id="installer-download" href="https://github.com/greenflamehq/greenflame/releases/download/v1.0.0-rc9/greenflame-1.0.0-rc9-win-x64.exe"><span>installer</span><span class="download-arrow" aria-hidden="true">↘</span></a>
+                            <span><a class="text-link" id="portable-download" href="https://github.com/greenflamehq/greenflame/releases/download/v1.0.0-rc9/greenflame.exe">portable .exe</a><span class="link-arrow" aria-hidden="true">↘</span></span>
+                        </div>
+                        <p class="download-note">Windows 11 · x64 · Free &amp; open source</p>
+                    </div>
                 </div>
                 <figure class="composition">
                     <svg viewBox="0 0 600 600" role="img" aria-labelledby="art-title art-description">
@@ -49,7 +56,7 @@
             </section>
             <div class="principles" aria-label="Product principles"><span>capture with intention</span><span aria-hidden="true">●</span><span>annotate with clarity</span><span aria-hidden="true">■</span><span>share without friction</span><span aria-hidden="true">↗</span></div>
             <section class="tools" id="tools" aria-labelledby="tools-heading">
-                <div class="section-intro"><p class="eyebrow">the working parts / 01—03</p><h2 id="tools-heading">a small tool.<br>a sharper<br>message.</h2><p>Just enough to turn “over there”<br>into “right here.”</p><a class="text-link" href="https://github.com/greenflamehq/greenflame#usage">explore the user guide <span aria-hidden="true">↗</span></a></div>
+                <div class="section-intro"><p class="eyebrow">the working parts / 01—03</p><h2 id="tools-heading">a small tool.<br>a sharper<br>message.</h2><p>Just enough to turn “over there”<br>into “right here.”</p><a class="text-link" href="https://github.com/greenflamehq/greenflame#usage">explore the user guide</a><span class="link-arrow" aria-hidden="true">↗</span></div>
                 <div class="tool-list">
                     <article class="tool"><span class="tool-number">01</span><div><h3>choose your frame.</h3><p>A region. A window. One monitor or the whole desktop. Precise selection, even across screens with different scaling.</p></div><span class="tool-symbol frame-symbol" aria-hidden="true"></span></article>
                     <article class="tool"><span class="tool-number">02</span><div><h3>give it direction.</h3><p>Arrows, shapes, highlights, text, and numbered steps. Put the emphasis exactly where it belongs.</p></div><span class="tool-symbol arrow-symbol" aria-hidden="true">↗</span></article>
@@ -57,11 +64,11 @@
                 </div>
             </section>
             <section class="start" aria-labelledby="start-heading">
-                <div class="start-copy"><p class="eyebrow">from screen to shared</p><h2 id="start-heading">one key.<br>all the possibility.</h2><p>Run greenflame. Press <kbd>Print Screen</kbd>.<br>Select, annotate, and carry on.</p><a class="text-link" href="https://github.com/greenflamehq/greenflame/releases/latest">download for windows <span aria-hidden="true">↗</span></a></div>
-                <div class="key-art" aria-hidden="true"><div class="key-face"><span>Prt<br>Sc</span><span class="key-arrow">↗</span></div><span class="key-caption">your next idea starts here.</span></div>
+                <div class="start-copy"><p class="eyebrow">from screen to shared</p><h2 id="start-heading">one key.<br>all the possibility.</h2><p>Run greenflame. Press <kbd>Print Screen</kbd>.<br>Select, annotate, and carry on.</p><div class="bottom-download"><a class="text-link" href="#downloads">download for windows</a><span class="bottom-download-arrow" aria-hidden="true">↘</span><span class="release-version" id="bottom-release-version">v1.0.0-rc9 · pre-release</span></div></div>
+                <div class="key-art" aria-hidden="true"><div class="key-face"><span>Prt<br>Sc</span><span class="key-arrow">↗</span></div></div>
             </section>
         </main>
-        <footer><a class="footer-brand" href="/">greenflame<span>.</span></a><span>made to make a point.<br>free software / MIT licensed</span><nav aria-label="Footer navigation"><a href="https://github.com/greenflamehq/greenflame/releases">releases ↗</a><a href="https://github.com/greenflamehq/greenflame/issues">report an issue ↗</a><a href="https://github.com/greenflamehq/greenflame">source code ↗</a></nav><a class="back-top" href="#" aria-label="Back to top">↑</a></footer>
+        <footer><a class="footer-brand" href="/">greenflame<span>.</span></a><span>made to make a point.<br>free software / MIT licensed</span><nav aria-label="Footer navigation"><span><a href="https://github.com/greenflamehq/greenflame/releases">releases</a> <span aria-hidden="true">↗</span></span><span><a href="https://github.com/greenflamehq/greenflame/issues">report an issue</a> <span aria-hidden="true">↗</span></span><span><a href="https://github.com/greenflamehq/greenflame">source code</a> <span aria-hidden="true">↗</span></span></nav><div class="back-top"><a href="#">back to top</a> <span aria-hidden="true">↑</span></div></footer>
     </div>
 </body>
 </html>
