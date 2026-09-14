@@ -71,8 +71,8 @@ figcaption { display: flex; justify-content: space-between; gap: 15px; padding: 
 .section-intro > p:not(.eyebrow) { font-size: 18px; line-height: 1.55; margin-bottom: 26px; }
 .text-link { font-size: 16px; }
 .link-arrow { margin-left: 16px; }
-.tool-list { border-top: 1px solid var(--ink); }
-.tool { display: grid; grid-template-columns: 30px 1fr 56px; gap: 20px; align-items: start; padding: 26px 0; border-bottom: 1px solid var(--ink); }
+.tool { display: grid; grid-template-columns: 30px 1fr 56px; gap: 20px; align-items: start; padding: 26px 0; }
+.tool + .tool { border-top: 1px solid var(--ink); }
 .tool-number { font-size: 12px; padding-top: 8px; }
 .tool h3 { font-size: 26px; letter-spacing: -.025em; margin: 0 0 10px; }
 .tool p { font-size: 16px; line-height: 1.6; margin: 0; max-width: 350px; }
