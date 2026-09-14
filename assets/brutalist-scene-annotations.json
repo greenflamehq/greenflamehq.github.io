@@ -1,0 +1,398 @@
+{
+  "coordinate_space": "local",
+  "font": {
+    "family": "Arial"
+  },
+  "color": "#ff0000",
+  "annotations": [
+    {
+      "type": "text",
+      "origin": {
+        "x": 62,
+        "y": 72
+      },
+      "size": 18,
+      "color": "#0000ff",
+      "spans": [
+        {
+          "text": "massing / first review",
+          "bold": true
+        }
+      ]
+    },
+    {
+      "type": "highlighter",
+      "start": {
+        "x": 64,
+        "y": 111
+      },
+      "end": {
+        "x": 245,
+        "y": 111
+      },
+      "size": 9,
+      "color": "#f7eb62",
+      "opacity_percent": 35
+    },
+    {
+      "type": "text",
+      "origin": {
+        "x": 63,
+        "y": 137
+      },
+      "size": 13,
+      "color": "#0000ff",
+      "spans": [
+        {
+          "text": "Keep the stepped\nprofile."
+        }
+      ]
+    },
+    {
+      "type": "brush",
+      "points": [
+        {
+          "x": 78,
+          "y": 236
+        },
+        {
+          "x": 103,
+          "y": 211
+        },
+        {
+          "x": 149,
+          "y": 211
+        },
+        {
+          "x": 174,
+          "y": 183
+        },
+        {
+          "x": 221,
+          "y": 183
+        }
+      ],
+      "size": 4,
+      "color": "#0000ff"
+    },
+    {
+      "type": "arrow",
+      "start": {
+        "x": 218,
+        "y": 219
+      },
+      "end": {
+        "x": 297,
+        "y": 268
+      },
+      "size": 4,
+      "color": "#0000ff"
+    },
+    {
+      "type": "text",
+      "origin": {
+        "x": 631,
+        "y": 86
+      },
+      "size": 11,
+      "spans": [
+        {
+          "text": "Try a round\nopening?"
+        }
+      ]
+    },
+    {
+      "type": "filled_ellipse",
+      "center": {
+        "x": 545,
+        "y": 184
+      },
+      "width": 29,
+      "height": 29,
+      "color": "#ff0000"
+    },
+    {
+      "type": "arrow",
+      "start": {
+        "x": 638,
+        "y": 145
+      },
+      "end": {
+        "x": 568,
+        "y": 178
+      },
+      "size": 2
+    },
+    {
+      "type": "ellipse",
+      "center": {
+        "x": 678,
+        "y": 431
+      },
+      "width": 140,
+      "height": 73,
+      "size": 4
+    },
+    {
+      "type": "text",
+      "origin": {
+        "x": 570,
+        "y": 491
+      },
+      "size": 15,
+      "spans": [
+        {
+          "text": "Shorten this\ncantilever?",
+          "bold": true
+        }
+      ]
+    },
+    {
+      "type": "arrow",
+      "start": {
+        "x": 652,
+        "y": 488
+      },
+      "end": {
+        "x": 673,
+        "y": 460
+      },
+      "size": 5
+    },
+    {
+      "type": "line",
+      "start": {
+        "x": 699,
+        "y": 361
+      },
+      "end": {
+        "x": 699,
+        "y": 410
+      },
+      "size": 3
+    },
+    {
+      "type": "filled_rectangle",
+      "left": 571,
+      "top": 782,
+      "width": 49,
+      "height": 119,
+      "color": "#ffff00"
+    },
+    {
+      "type": "rectangle",
+      "left": 560,
+      "top": 770,
+      "width": 71,
+      "height": 133,
+      "size": 2,
+      "color": "#ffff00"
+    },
+    {
+      "type": "text",
+      "origin": {
+        "x": 549,
+        "y": 640
+      },
+      "size": 14,
+      "color": "#000000",
+      "spans": [
+        {
+          "text": "Recess the entry",
+          "bold": true
+        }
+      ]
+    },
+    {
+      "type": "arrow",
+      "start": {
+        "x": 674,
+        "y": 681
+      },
+      "end": {
+        "x": 623,
+        "y": 790
+      },
+      "size": 4,
+      "color": "#ffff00"
+    },
+    {
+      "type": "bubble",
+      "center": {
+        "x": 536,
+        "y": 650
+      },
+      "size": 10,
+      "color": "#ffff00"
+    },
+    {
+      "type": "brush",
+      "points": [
+        {
+          "x": 144,
+          "y": 570
+        },
+        {
+          "x": 159,
+          "y": 587
+        },
+        {
+          "x": 177,
+          "y": 552
+        },
+        {
+          "x": 187,
+          "y": 533
+        }
+      ],
+      "size": 5,
+      "color": "#ffffff"
+    },
+    {
+      "type": "brush",
+      "points": [
+        {
+          "x": 556,
+          "y": 689
+        },
+        {
+          "x": 578,
+          "y": 685
+        },
+        {
+          "x": 601,
+          "y": 690
+        },
+        {
+          "x": 624,
+          "y": 685
+        },
+        {
+          "x": 646,
+          "y": 688
+        }
+      ],
+      "size": 3,
+      "color": "#ffff00"
+    },
+    {
+      "type": "brush",
+      "points": [
+        {
+          "x": 634,
+          "y": 374
+        },
+        {
+          "x": 644,
+          "y": 362
+        },
+        {
+          "x": 655,
+          "y": 374
+        },
+        {
+          "x": 666,
+          "y": 362
+        },
+        {
+          "x": 678,
+          "y": 373
+        }
+      ],
+      "size": 2,
+      "color": "#ff0000"
+    },
+    {
+      "type": "line",
+      "start": {
+        "x": 303,
+        "y": 685
+      },
+      "end": {
+        "x": 303,
+        "y": 870
+      },
+      "size": 2,
+      "color": "#ffffff"
+    },
+    {
+      "type": "line",
+      "start": {
+        "x": 292,
+        "y": 693
+      },
+      "end": {
+        "x": 314,
+        "y": 677
+      },
+      "size": 2,
+      "color": "#ffffff"
+    },
+    {
+      "type": "line",
+      "start": {
+        "x": 292,
+        "y": 878
+      },
+      "end": {
+        "x": 314,
+        "y": 862
+      },
+      "size": 2,
+      "color": "#ffffff"
+    },
+    {
+      "type": "text",
+      "origin": {
+        "x": 259,
+        "y": 632
+      },
+      "size": 10,
+      "color": "#ffffff",
+      "spans": [
+        {
+          "text": "Check clear\nheight"
+        }
+      ]
+    },
+    {
+      "type": "line",
+      "start": {
+        "x": 544,
+        "y": 915
+      },
+      "end": {
+        "x": 649,
+        "y": 915
+      },
+      "size": 1,
+      "color": "#0000ff"
+    },
+    {
+      "type": "line",
+      "start": {
+        "x": 544,
+        "y": 908
+      },
+      "end": {
+        "x": 544,
+        "y": 922
+      },
+      "size": 1,
+      "color": "#0000ff"
+    },
+    {
+      "type": "line",
+      "start": {
+        "x": 649,
+        "y": 908
+      },
+      "end": {
+        "x": 649,
+        "y": 922
+      },
+      "size": 1,
+      "color": "#0000ff"
+    }
+  ]
+}
