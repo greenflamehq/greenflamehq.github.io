@@ -1,0 +1,18 @@
+{
+    "coordinate_space": "local",
+    "color": "#ffffff",
+    "font": { "family": "Arial" },
+    "annotations": [
+        { "type": "highlighter", "start": { "x": 856, "y": 174 }, "end": { "x": 943, "y": 174 }, "size": 18, "color": "#ffe66d", "opacity_percent": 50 },
+        { "type": "ellipse", "center": { "x": 894, "y": 91 }, "width": 99, "height": 101, "size": 3, "color": "#172f54" },
+        { "type": "rectangle", "left": 667, "top": 44, "width": 147, "height": 425, "size": 3, "color": "#172f54" },
+        { "type": "arrow", "start": { "x": 453, "y": 242 }, "end": { "x": 628, "y": 173 }, "size": 5 },
+        { "type": "text", "origin": { "x": 354, "y": 265 }, "size": 16, "spans": [{ "text": "find your focus.", "bold": true }] },
+        { "type": "line", "start": { "x": 354, "y": 304 }, "end": { "x": 548, "y": 304 }, "size": 2 },
+        { "type": "brush", "points": [{ "x": 86, "y": 391 }, { "x": 104, "y": 416 }, { "x": 128, "y": 433 }, { "x": 149, "y": 424 }, { "x": 175, "y": 391 }, { "x": 202, "y": 360 }], "size": 5, "color": "#ffe66d" },
+        { "type": "filled_rectangle", "left": 850, "top": 378, "width": 94, "height": 7, "color": "#172f54" },
+        { "type": "filled_ellipse", "center": { "x": 897, "y": 411 }, "width": 22, "height": 22, "color": "#e34528" },
+        { "type": "obfuscate", "left": 90, "top": 63, "width": 98, "height": 29, "size": 7 },
+        { "type": "bubble", "center": { "x": 312, "y": 263 }, "size": 15, "color": "#172f54" }
+    ]
+}
