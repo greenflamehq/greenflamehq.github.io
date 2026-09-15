@@ -12,8 +12,8 @@
 }
 :root {
     color-scheme: light;
-    /* Sampled from the greenflame logo at 40% across, 45% down. */
-    --green: #78d600;
+    /* Approved brand green. */
+    --green: #77ca00;
     --paper: #eeecdf;
     --ink: #1a1b17;
     --rule: #c0c0b2;
